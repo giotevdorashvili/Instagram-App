@@ -1,14 +1,13 @@
 import {NavigationContainer} from '@react-navigation/native';
 
 import StackNavigator from './StackNavigator';
-// import {PaperTheme} from '../theme/theme';
-// import {getNavigationTheme} from '../theme/theme';
+import useScheme from '../hooks/theme/useScheme';
 
 const Router = () => {
+  const {navigationTheme} = useScheme();
+
   return (
-    <NavigationContainer
-    //theme={getNavigationTheme(PaperTheme.colors.background)}
-    >
+    <NavigationContainer theme={navigationTheme}>
       <StackNavigator />
     </NavigationContainer>
   );
