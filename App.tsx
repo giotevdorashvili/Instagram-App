@@ -1,7 +1,7 @@
-import {Text} from 'react-native';
+import Router from './src/navigators/Router';
 
 function App(): JSX.Element {
-  return <Text>Hello</Text>;
+  return <Router />;
 }
 
 export default App;
