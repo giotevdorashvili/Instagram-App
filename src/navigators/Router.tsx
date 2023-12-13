@@ -1,10 +1,10 @@
 import {NavigationContainer} from '@react-navigation/native';
 
 import StackNavigator from './StackNavigator';
-import useScheme from '../hooks/theme/useScheme';
+import useApptheme from '../hooks/theme/useApptheme';
 
 const Router = () => {
-  const {navigationTheme} = useScheme();
+  const {navigationTheme} = useApptheme();
 
   return (
     <NavigationContainer theme={navigationTheme}>

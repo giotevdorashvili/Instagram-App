@@ -1,10 +1,10 @@
 import Router from './src/navigators/Router';
 import {PaperProvider} from 'react-native-paper';
 
-import useScheme from './src/hooks/theme/useScheme';
+import useApptheme from './src/hooks/theme/useApptheme';
 
 function App(): JSX.Element {
-  const {paperTheme} = useScheme();
+  const {paperTheme} = useApptheme();
 
   return (
     <PaperProvider theme={paperTheme}>

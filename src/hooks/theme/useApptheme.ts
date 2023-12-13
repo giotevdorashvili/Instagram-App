@@ -1,5 +1,4 @@
 import {useColorScheme} from 'react-native';
-
 import {MD3LightTheme, MD3DarkTheme} from 'react-native-paper';
 import {DefaultTheme, DarkTheme} from '@react-navigation/native';
 
@@ -8,6 +7,12 @@ export const lightTheme = {
   myOwnProperty: true,
   colors: {
     ...MD3LightTheme.colors,
+    primary: 'grey',
+    outline: '#d5d8de',
+    blue: '#0f71f2',
+    lightBlue: '#0f71f2',
+    logoText: '#535a5c',
+    inputBackgroud: 'white',
   },
 };
 
@@ -16,19 +21,25 @@ export const darkTheme = {
   myOwnProperty: true,
   colors: {
     ...MD3DarkTheme.colors,
+    primary: '#d5d8de',
+    blue: '#0f71f2',
+    lightBlue: '#40b2f5',
+    logoText: 'white',
+    inputBackgroud: '#1C2A34',
   },
 };
 
-const useScheme = () => {
+const useAppTheme = () => {
   const colorScheme = useColorScheme();
 
   const paperTheme = colorScheme === 'light' ? lightTheme : darkTheme;
+  const navTheme = colorScheme === 'light' ? DefaultTheme : DarkTheme;
 
   const navigationTheme = {
-    ...(colorScheme === 'light' ? DefaultTheme : DarkTheme),
+    ...navTheme,
     myOwnProperty: true,
     colors: {
-      ...(colorScheme === 'light' ? DefaultTheme : DarkTheme).colors,
+      ...navTheme.colors,
       ...paperTheme.colors,
     },
   };
@@ -36,15 +47,4 @@ const useScheme = () => {
   return {paperTheme, navigationTheme};
 };
 
-export default useScheme;
-
-// import {useColorScheme} from 'react-native';
-// import {getPaperTheme} from '../../theme/theme';
-
-// const useScheme = () => {
-//   const colorScheme = useColorScheme();
-
-//   return getPaperTheme(colorScheme!);
-// };
-
-// export default useScheme;
+export default useAppTheme;

@@ -15,6 +15,7 @@
 		7699B88040F8A987B510C191 /* libPods-instagramApp-instagramAppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-instagramApp-instagramAppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		CE7082F12B27444E00E639AD /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CE7082F02B27444E00E639AD /* MaterialIcons.ttf */; };
+		CEF550EE2B288818009D3714 /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CEF550ED2B288818009D3714 /* MaterialCommunityIcons.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -45,6 +46,7 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = instagramApp/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-instagramApp-instagramAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-instagramApp-instagramAppTests.release.xcconfig"; path = "Target Support Files/Pods-instagramApp-instagramAppTests/Pods-instagramApp-instagramAppTests.release.xcconfig"; sourceTree = "<group>"; };
 		CE7082F02B27444E00E639AD /* MaterialIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
+		CEF550ED2B288818009D3714 /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = MaterialCommunityIcons.ttf; path = "../../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -154,6 +156,7 @@
 		CEDA4F462B2742E1001F92C8 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				CEF550ED2B288818009D3714 /* MaterialCommunityIcons.ttf */,
 				CE7082F02B27444E00E639AD /* MaterialIcons.ttf */,
 			);
 			path = Fonts;
@@ -254,6 +257,7 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				CEF550EE2B288818009D3714 /* MaterialCommunityIcons.ttf in Resources */,
 				CE7082F12B27444E00E639AD /* MaterialIcons.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
