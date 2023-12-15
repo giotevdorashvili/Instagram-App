@@ -2,16 +2,15 @@ import {StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 
 import useAppTheme from '../../../hooks/theme/useApptheme';
-
-interface LoginButtonprops {
-  email: string;
-  password: string;
-}
+import {useGetNavigation} from '../../../navigators/StackNavigator';
+import {LoginButtonprops} from '../LoginTypes';
 
 export const LogInButton = ({email, password}: LoginButtonprops) => {
   const {paperTheme} = useAppTheme();
 
-  console.log(email, password, '...............');
+  const handleLogInPress = () => {
+    console.log(email, password, '........email, password.......');
+  };
 
   return (
     <Button
@@ -20,7 +19,7 @@ export const LogInButton = ({email, password}: LoginButtonprops) => {
       mode="contained"
       buttonColor={paperTheme.colors.blue}
       textColor="white"
-      onPress={() => console.log('Pressed')}>
+      onPress={handleLogInPress}>
       Log in
     </Button>
   );
@@ -44,13 +43,15 @@ export const ForgotPasswordButton = () => {
 export const CreateAccountButton = () => {
   const {paperTheme} = useAppTheme();
 
+  const navigation = useGetNavigation();
+
   return (
     <Button
       style={[styles.button, {borderColor: paperTheme.colors.lightBlue}]}
       labelStyle={styles.buttonLabel}
       mode="outlined"
       textColor={paperTheme.colors.lightBlue}
-      onPress={() => console.log('Pressed')}>
+      onPress={() => navigation.navigate('SignUp', {})}>
       Create new account
     </Button>
   );

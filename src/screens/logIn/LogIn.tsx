@@ -1,18 +1,18 @@
 import {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, KeyboardAvoidingView, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import GradientBackground from '../../components/gradientBackground/GradientBackground';
 import {ScreenProps} from '../../navigators/StackNavigator';
 import StatusBar from '../../components/statusBar/StatusBar';
-import InstagramLogo from './logos/InstagramLogo';
-import MetaLogo from './logos/MetaLogo';
-import Inputs from './inputs/Inputs';
+import InstagramLogo from '../../components/logos/InstagramLogo';
+import MetaLogo from '../../components/logos/MetaLogo';
+import LogInInputs from './inputs/LogInInputs';
 import {
   LogInButton,
   ForgotPasswordButton,
   CreateAccountButton,
-} from './buttons/Buttons';
+} from './buttons/LogInButtons';
 
 const LogIn: React.FC<ScreenProps<'LogIn'>> = () => {
   const [email, setEmail] = useState('');
@@ -23,13 +23,17 @@ const LogIn: React.FC<ScreenProps<'LogIn'>> = () => {
       <SafeAreaView style={styles.container}>
         <StatusBar />
 
-        <InstagramLogo />
+        <KeyboardAvoidingView
+          style={styles.KeyboardAvoidingView}
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <InstagramLogo />
 
-        <Inputs {...{email, password, setEmail, setPassword}} />
+          <LogInInputs {...{email, password, setEmail, setPassword}} />
 
-        <LogInButton {...{email, password}} />
+          <LogInButton {...{email, password}} />
 
-        <ForgotPasswordButton />
+          <ForgotPasswordButton />
+        </KeyboardAvoidingView>
 
         <View style={styles.createButtonMetaContainer}>
           <CreateAccountButton />
@@ -47,11 +51,16 @@ const styles = StyleSheet.create({
     marginHorizontal: 15,
   },
   createButtonMetaContainer: {
-    position: 'absolute',
-    bottom: 35,
+    bottom: Platform.OS === 'ios' ? 0 : 20,
     width: '100%',
     alignItems: 'center',
     gap: 15,
+  },
+  KeyboardAvoidingView: {
+    flex: 1,
+    width: '100%',
+    alignItems: 'center',
+    paddingBottom: 90,
   },
 });
 

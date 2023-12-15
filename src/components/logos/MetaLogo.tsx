@@ -1,8 +1,8 @@
 import {StyleSheet, View} from 'react-native';
 import {Text} from 'react-native-paper';
 
-import useAppTheme from '../../../hooks/theme/useApptheme';
-import Logo from '../../../assets/meta-logo.svg';
+import useAppTheme from '../../hooks/theme/useApptheme';
+import Logo from '../../assets/meta-logo.svg';
 
 const MetaLogo = () => {
   const {paperTheme} = useAppTheme();

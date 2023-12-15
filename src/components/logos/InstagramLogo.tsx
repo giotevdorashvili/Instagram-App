@@ -4,7 +4,8 @@ const InstagramLogo = () => {
   return (
     <Image
       style={styles.instaLogo}
-      source={require('../../../assets/instagram-logo.png')}
+      // source={require('../../../assets/instagram-logo.png')}
+      source={require('../../assets/instagram-logo.png')}
     />
   );
 };

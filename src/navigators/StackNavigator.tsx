@@ -1,8 +1,10 @@
 import React from 'react';
 import {
+  NativeStackNavigationProp,
   NativeStackScreenProps,
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
 
 import LogIn from '../screens/logIn/LogIn';
 import SignUp from '../screens/signUp/SignUp';
@@ -25,9 +27,21 @@ const StackNavigator = () => {
         component={LogIn}
         options={{headerShown: false}}
       />
-      <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen
+        name="SignUp"
+        component={SignUp}
+        options={{
+          title: '',
+          headerTransparent: true,
+          headerBackTitleVisible: false,
+        }}
+      />
     </Stack.Navigator>
   );
 };
 
 export default StackNavigator;
+
+export const useGetNavigation = () => {
+  return useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+};
