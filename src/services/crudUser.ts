@@ -1,19 +1,28 @@
-import {ref, set, child, get} from 'firebase/database';
-import {FIREBASE_DATABASE} from './FirebaseConfig';
+import {
+  ref,
+  set,
+  child,
+  get,
+  query,
+  orderByChild,
+  equalTo,
+} from 'firebase/database';
 
-export const createUser = async (
-  userId: string,
-  name: string,
-  username: string,
-) => {
+import {FIREBASE_DATABASE} from './FirebaseConfig';
+import {CreateUserTypes} from './ServiceTypes';
+
+export const createUser = async ({
+  userId,
+  username,
+  fullName,
+}: CreateUserTypes) => {
   try {
     await set(ref(FIREBASE_DATABASE, `users/${userId}`), {
-      name,
       username,
+      fullName,
     });
-    console.log('User data saved!');
   } catch (error) {
-    console.error('Error writing user data:', error);
+    throw error;
   }
 };
 
@@ -23,9 +32,24 @@ export const fetchUser = async (userId: string) => {
       child(ref(FIREBASE_DATABASE), `users/${userId}`),
     );
 
-    console.log('user in in fetchUser', snapshot.val());
     return snapshot.val();
   } catch (error) {
-    console.error('error in fetchUser', error);
+    throw error;
+  }
+};
+
+export const findUserByUsername = async (username: string) => {
+  try {
+    const snapshot = await get(
+      query(
+        ref(FIREBASE_DATABASE, 'users'),
+        orderByChild('username'),
+        equalTo(username),
+      ),
+    );
+
+    return snapshot.exists();
+  } catch (error) {
+    console.error(error);
   }
 };

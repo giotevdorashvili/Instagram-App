@@ -1,42 +1,68 @@
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  signOut,
 } from 'firebase/auth';
-import {FirebaseError} from '@firebase/util';
 
 import {FIREBASE_AUTH} from './FirebaseConfig';
+import {createUser, findUserByUsername} from './crudUser';
+import {SignUpUserTypes, SignInUserTypes} from './ServiceTypes';
 
-export const signUpUser = async (email: string, password: string) => {
+export const signUpUser = async ({
+  email,
+  password,
+  fullName,
+  username,
+}: SignUpUserTypes) => {
   try {
+    const usernameExists = await findUserByUsername(username);
+
+    if (usernameExists) {
+      throw new Error('Username already exists');
+    }
+
     const userCredential = await createUserWithEmailAndPassword(
       FIREBASE_AUTH,
       email,
       password,
     );
 
-    console.log('-----userCredential in sign up------', userCredential);
+    const userId = userCredential.user.uid;
 
-    return userCredential.user;
-  } catch (error) {
-    if (error instanceof FirebaseError) {
-      console.log('-----userCredential in sign up------', error.message);
+    if (!userId) {
+      throw new Error('Error while signing up user');
     }
+
+    await createUser({
+      userId,
+      fullName,
+      username,
+    });
+
+    return userId;
+  } catch (error) {
+    throw error;
   }
 };
 
-export const signInUser = async (email: string, password: string) => {
+export const signInUser = async ({email, password}: SignInUserTypes) => {
   try {
     const userCredential = await signInWithEmailAndPassword(
       FIREBASE_AUTH,
       email,
       password,
     );
-    console.log('-----userCredential in sign in------', userCredential);
 
     return userCredential.user;
   } catch (error) {
-    if (error instanceof FirebaseError) {
-      console.log('-----userCredential in sign in------', error.message);
-    }
+    throw error;
+  }
+};
+
+export const signOutUser = async () => {
+  try {
+    await signOut(FIREBASE_AUTH);
+  } catch (error) {
+    throw error;
   }
 };

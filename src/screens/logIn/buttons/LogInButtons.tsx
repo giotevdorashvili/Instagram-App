@@ -3,27 +3,6 @@ import {Button} from 'react-native-paper';
 
 import useAppTheme from '../../../hooks/theme/useApptheme';
 import {useGetNavigation} from '../../../navigators/StackNavigator';
-import {LoginButtonprops} from '../LoginTypes';
-
-export const LogInButton = ({email, password}: LoginButtonprops) => {
-  const {paperTheme} = useAppTheme();
-
-  const handleLogInPress = () => {
-    console.log(email, password, '........email, password.......');
-  };
-
-  return (
-    <Button
-      style={styles.button}
-      labelStyle={styles.buttonLabel}
-      mode="contained"
-      buttonColor={paperTheme.colors.blue}
-      textColor="white"
-      onPress={handleLogInPress}>
-      Log in
-    </Button>
-  );
-};
 
 export const ForgotPasswordButton = () => {
   const {paperTheme} = useAppTheme();

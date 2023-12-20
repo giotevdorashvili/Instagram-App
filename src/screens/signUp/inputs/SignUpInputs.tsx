@@ -1,67 +1,114 @@
-import {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {TextInput} from 'react-native-paper';
+import {useEffect, useState} from 'react';
+import {ScrollView} from 'react-native';
+import {TextInput, HelperText, Button} from 'react-native-paper';
+import {useFormik} from 'formik';
 
+import {styles} from './InputStyles';
+import {getSharedInputprops} from '../../../utils/generic/utils';
+import Error from '../../../components/error/Error';
 import useAppTheme from '../../../hooks/theme/useApptheme';
-import {InputProps} from '../SignUpTypes';
+import {InputValuTypes} from '../SignUpTypes';
+import {useGetNavigation} from '../../../navigators/StackNavigator';
+import useSignUpUser from '../../../hooks/services/useSignUpUser';
+import {
+  signUpInputsInitialState,
+  signUpValidationSchema,
+} from '../../../utils/signUp/utils';
 
-const SignUpInputs = (props: InputProps) => {
-  const {username, fullName, email, password, onSignUpValuesChange} = props;
-
+const SignUpInputs = () => {
   const [hidePassword, setHidePassword] = useState(true);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+
+  const navigation = useGetNavigation();
 
   const {paperTheme} = useAppTheme();
 
-  const inputSharedProps = {
-    style: [styles.input, {backgroundColor: paperTheme.colors.inputBackgroud}],
-    outlineStyle: styles.inputOutlineStyle,
-    mode: 'outlined' as 'outlined' | 'flat' | undefined,
-  };
+  const sharedInputProps = getSharedInputprops(
+    paperTheme.colors.inputBackgroud,
+  );
+
+  const formik = useFormik({
+    initialValues: signUpInputsInitialState,
+    validationSchema: signUpValidationSchema,
+    onSubmit: handleSubmit,
+  });
+
+  const {data: userId, status, mutate, error} = useSignUpUser();
+
+  useEffect(() => {
+    if (userId) navigation.navigate('Profile', {userId});
+  }, [userId, navigation]);
+
+  function handleSubmit(values: InputValuTypes) {
+    mutate(values);
+  }
 
   const getInputClearButton = (type: string) => {
     return (
       <TextInput.Icon
         icon="close"
-        onPress={() => onSignUpValuesChange('', type)}
+        onPress={() => formik.handleChange(type)('')}
         style={styles.emailIcon}
       />
     );
   };
 
   return (
-    <View style={styles.inputsContainer}>
+    <ScrollView
+      style={styles.inputsContainer}
+      contentContainerStyle={styles.containerStyle}>
       <TextInput
-        {...inputSharedProps}
+        {...sharedInputProps}
         label="Username"
-        value={username}
-        onChangeText={val => onSignUpValuesChange(val, 'username')}
-        right={username.length ? getInputClearButton('username') : null}
+        value={formik.values.username}
+        onChangeText={formik.handleChange('username')}
+        onBlur={formik.handleBlur('username')}
+        error={formik.touched.username && !!formik.errors.username}
+        right={
+          formik.values.username.length ? getInputClearButton('username') : null
+        }
       />
+      {formik.touched.username && formik.errors.username && (
+        <HelperText type="error">{formik.errors.username}</HelperText>
+      )}
+
       <TextInput
-        {...inputSharedProps}
+        {...sharedInputProps}
         label="Full name"
-        value={fullName}
-        onChangeText={val => onSignUpValuesChange(val, 'fullName')}
-        right={fullName.length ? getInputClearButton('fullName') : null}
+        value={formik.values.fullName}
+        onChangeText={formik.handleChange('fullName')}
+        onBlur={formik.handleBlur('fullName')}
+        error={formik.touched.fullName && !!formik.errors.fullName}
+        right={
+          formik.values.fullName.length ? getInputClearButton('fullName') : null
+        }
       />
+      {formik.touched.fullName && formik.errors.fullName && (
+        <HelperText type="error">{formik.errors.fullName}</HelperText>
+      )}
+
       <TextInput
-        {...inputSharedProps}
+        {...sharedInputProps}
         label="Email"
-        value={email}
-        onChangeText={val => onSignUpValuesChange(val, 'email')}
-        right={email.length ? getInputClearButton('email') : null}
+        value={formik.values.email}
+        onChangeText={formik.handleChange('email')}
+        onBlur={formik.handleBlur('email')}
+        error={formik.touched.email && !!formik.errors.email}
+        right={formik.values.email.length ? getInputClearButton('email') : null}
       />
+      {formik.touched.email && formik.errors.email && (
+        <HelperText type="error">{formik.errors.email}</HelperText>
+      )}
+
       <TextInput
-        {...inputSharedProps}
+        {...sharedInputProps}
         label="Password"
-        value={password}
-        onChangeText={val => onSignUpValuesChange(val, 'password')}
-        onFocus={() => setIsPasswordFocused(true)}
-        onBlur={() => setIsPasswordFocused(false)}
+        value={formik.values.password}
+        onChangeText={formik.handleChange('password')}
+        error={formik.touched.password && !!formik.errors.password}
+        onBlur={formik.handleBlur('password')}
         secureTextEntry={hidePassword}
         right={
-          isPasswordFocused || password.length ? (
+          formik.values.password.length ? (
             <TextInput.Icon
               icon={hidePassword ? 'eye-off' : 'eye'}
               onPress={() => setHidePassword(prev => !prev)}
@@ -70,28 +117,25 @@ const SignUpInputs = (props: InputProps) => {
           ) : null
         }
       />
-    </View>
+      {formik.touched.password && formik.errors.password && (
+        <HelperText type="error">{formik.errors.password}</HelperText>
+      )}
+
+      {error && <Error error={error.message} />}
+
+      <Button
+        loading={status === 'pending'}
+        disabled={!formik.isValid || !formik.dirty}
+        style={styles.button}
+        labelStyle={styles.buttonLabel}
+        mode="contained"
+        buttonColor={paperTheme.colors.blue}
+        textColor="white"
+        onPress={() => handleSubmit(formik.values)}>
+        Sign up
+      </Button>
+    </ScrollView>
   );
 };
-
-const styles = StyleSheet.create({
-  inputsContainer: {
-    width: '100%',
-    gap: 15,
-    marginBottom: 15,
-  },
-  input: {
-    borderRadius: 15,
-    fontWeight: '500',
-    height: 60,
-  },
-  inputOutlineStyle: {
-    borderRadius: 15,
-    borderWidth: 1,
-  },
-  emailIcon: {
-    marginTop: 15,
-  },
-});
 
 export default SignUpInputs;

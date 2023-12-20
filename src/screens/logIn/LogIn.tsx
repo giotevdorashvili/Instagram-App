@@ -1,4 +1,3 @@
-import {useState} from 'react';
 import {StyleSheet, View, KeyboardAvoidingView, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
@@ -9,15 +8,11 @@ import InstagramLogo from '../../components/logos/InstagramLogo';
 import MetaLogo from '../../components/logos/MetaLogo';
 import LogInInputs from './inputs/LogInInputs';
 import {
-  LogInButton,
   ForgotPasswordButton,
   CreateAccountButton,
 } from './buttons/LogInButtons';
 
 const LogIn: React.FC<ScreenProps<'LogIn'>> = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
   return (
     <GradientBackground>
       <SafeAreaView style={styles.container}>
@@ -28,9 +23,7 @@ const LogIn: React.FC<ScreenProps<'LogIn'>> = () => {
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
           <InstagramLogo />
 
-          <LogInInputs {...{email, password, setEmail, setPassword}} />
-
-          <LogInButton {...{email, password}} />
+          <LogInInputs />
 
           <ForgotPasswordButton />
         </KeyboardAvoidingView>

@@ -13,6 +13,7 @@ export const lightTheme = {
     lightBlue: '#0f71f2',
     logoText: '#535a5c',
     inputBackgroud: 'white',
+    error: '#fa0202',
   },
 };
 
@@ -26,6 +27,7 @@ export const darkTheme = {
     lightBlue: '#40b2f5',
     logoText: 'white',
     inputBackgroud: '#1C2A34',
+    error: '#f5515b',
   },
 };
 
