@@ -5,7 +5,6 @@ import {useFormik} from 'formik';
 
 import {styles} from './InputStyles';
 import {getSharedInputprops} from '../../../utils/generic/utils';
-import Error from '../../../components/error/Error';
 import useAppTheme from '../../../hooks/theme/useApptheme';
 import {InputValuTypes} from '../SignUpTypes';
 import {useGetNavigation} from '../../../navigators/StackNavigator';
@@ -41,6 +40,18 @@ const SignUpInputs = () => {
   function handleSubmit(values: InputValuTypes) {
     mutate(values);
   }
+  useEffect(() => {
+    if (!error) return;
+
+    const errorMessage = error.message.startsWith('Firebase')
+      ? 'Email already in use'
+      : error.message;
+
+    formik.setFieldError('password', errorMessage);
+    formik.touched.password = true;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
 
   const getInputClearButton = (type: string) => {
     return (
@@ -104,7 +115,6 @@ const SignUpInputs = () => {
         label="Password"
         value={formik.values.password}
         onChangeText={formik.handleChange('password')}
-        error={formik.touched.password && !!formik.errors.password}
         onBlur={formik.handleBlur('password')}
         secureTextEntry={hidePassword}
         right={
@@ -120,8 +130,6 @@ const SignUpInputs = () => {
       {formik.touched.password && formik.errors.password && (
         <HelperText type="error">{formik.errors.password}</HelperText>
       )}
-
-      {error && <Error error={error.message} />}
 
       <Button
         loading={status === 'pending'}

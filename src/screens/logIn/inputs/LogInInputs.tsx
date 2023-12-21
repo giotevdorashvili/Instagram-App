@@ -5,7 +5,6 @@ import {useFormik} from 'formik';
 
 import useAppTheme from '../../../hooks/theme/useApptheme';
 import {getSharedInputprops} from '../../../utils/generic/utils';
-import Error from '../../../components/error/Error';
 import useSignInUser from '../../../hooks/services/useSignInUser';
 import {useGetNavigation} from '../../../navigators/StackNavigator';
 import {
@@ -37,6 +36,15 @@ const LogInInputs = () => {
       navigation.navigate('Profile', {userId: data?.uid});
     }
   }, [data?.uid, navigation]);
+
+  useEffect(() => {
+    if (!error) return;
+
+    formik.setFieldError('password', 'Invalid Email or Password');
+    formik.touched.password = true;
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [error]);
 
   function handleLogInPress(values: {email: string; password: string}) {
     mutate(values);
@@ -72,7 +80,6 @@ const LogInInputs = () => {
         onChangeText={formik.handleChange('password')}
         onBlur={formik.handleBlur('password')}
         secureTextEntry={hidePassword}
-        error={formik.touched.password && !!formik.errors.password}
         right={
           formik.values.password.length ? (
             <TextInput.Icon
@@ -83,11 +90,10 @@ const LogInInputs = () => {
           ) : null
         }
       />
+
       {formik.touched.password && formik.errors.password && (
         <HelperText type="error">{formik.errors.password}</HelperText>
       )}
-
-      {error && <Error error={error.message} />}
 
       <Button
         disabled={!formik.isValid || !formik.dirty}
