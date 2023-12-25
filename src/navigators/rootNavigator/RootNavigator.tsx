@@ -1,30 +1,25 @@
 import React, {useEffect, useState} from 'react';
 import {
   NativeStackNavigationProp,
-  NativeStackScreenProps,
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {User, onAuthStateChanged} from 'firebase/auth';
-
-import LogIn from '../screens/logIn/LogIn';
-import SignUp from '../screens/signUp/SignUp';
-import Profile from '../screens/profile/Profile';
-import {FIREBASE_AUTH} from '../services/FirebaseConfig';
 import {ActivityIndicator} from 'react-native-paper';
 
-export type ScreenProps<T extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, T>;
+import LogIn from '../../screens/authScreens/logIn/LogIn';
+import SignUp from '../../screens/authScreens/signUp/SignUp';
+import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
+import TabNavigator from '../tabNavigator/TabNavigator';
+import {RootStackParamList} from './RootNavigatorTypes';
 
-export type RootStackParamList = {
-  LogIn: undefined;
-  SignUp: {};
-  Profile: {userId: string};
+export const useGetNavigation = () => {
+  return useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const StackNavigator = () => {
+const RootNavigator = () => {
   const [userLoggedIn, setUserLoggedIn] = useState<User | null>();
   const [loading, setLoading] = useState(true);
 
@@ -58,13 +53,9 @@ const StackNavigator = () => {
         </>
       ) : (
         <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            title: '',
-            headerTransparent: true,
-            headerBackTitleVisible: false,
-          }}
+          name="TabNavigator"
+          component={TabNavigator}
+          options={{headerShown: false}}
           initialParams={{userId: userLoggedIn.uid}}
         />
       )}
@@ -72,8 +63,4 @@ const StackNavigator = () => {
   );
 };
 
-export default StackNavigator;
-
-export const useGetNavigation = () => {
-  return useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-};
+export default RootNavigator;
