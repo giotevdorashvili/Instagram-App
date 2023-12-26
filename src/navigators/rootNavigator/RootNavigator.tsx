@@ -30,7 +30,7 @@ const RootNavigator = () => {
     });
   }, []);
 
-  if (loading) return <ActivityIndicator />;
+  if (loading) return <ActivityIndicator style={{flex: 1}} />;
 
   return (
     <Stack.Navigator>
