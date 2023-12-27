@@ -22,3 +22,5 @@ export const FIREBASE_AUTH = initializeAuth(FIREBASE_APP, {
   persistence: getReactNativePersistence(AsyncStorage),
 });
 export const FIREBASE_SRORAGE = getStorage();
+
+export const userId = FIREBASE_AUTH.currentUser?.uid;

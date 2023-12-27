@@ -56,7 +56,6 @@ const RootNavigator = () => {
           name="TabNavigator"
           component={TabNavigator}
           options={{headerShown: false}}
-          initialParams={{userId: userLoggedIn.uid}}
         />
       )}
     </Stack.Navigator>

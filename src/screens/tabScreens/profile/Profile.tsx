@@ -8,13 +8,26 @@ import StatusBar from '../../../components/statusBar/StatusBar';
 import {ProfilePropTypes} from '../../../navigators/tabNavigator/TabNavigatorTyps';
 import ProfilePicture from './profilePicture/ProfilePicture';
 import ProfileCounter from './profileCounter/ProfileCounter';
+import {renderProfileTabIcon} from '../../../utils/services/utils';
+import {renderHeaderLeft} from '../../../utils/tabNavigator/utils';
+import {FIREBASE_AUTH} from '../../../services/FirebaseConfig';
 
-const Profile: React.FC<ProfilePropTypes> = ({route, navigation}) => {
-  const {data: profileData, isLoading} = useFetchUser(route.params.userId);
+const Profile: React.FC<ProfilePropTypes> = ({navigation}) => {
+  const userId = FIREBASE_AUTH.currentUser?.uid;
+
+  const {data: profileData, isLoading} = useFetchUser(userId!);
+
+  const username = profileData?.username;
+  const imageUri = profileData?.profilePictureUri;
 
   useEffect(() => {
-    navigation.setParams({username: profileData?.username});
-  }, [navigation, profileData?.username]);
+    if (!imageUri || !username) return;
+
+    navigation.setOptions({
+      tabBarIcon: () => renderProfileTabIcon(imageUri),
+      headerLeft: () => renderHeaderLeft(username),
+    });
+  }, [navigation, imageUri, username]);
 
   if (isLoading) return <ActivityIndicator style={styles.container} />;
 
@@ -23,7 +36,7 @@ const Profile: React.FC<ProfilePropTypes> = ({route, navigation}) => {
       <StatusBar />
 
       <View style={styles.avatarCountersContainer}>
-        <ProfilePicture />
+        <ProfilePicture imageUri={imageUri} />
         <ProfileCounter />
       </View>
 
@@ -35,8 +48,8 @@ const Profile: React.FC<ProfilePropTypes> = ({route, navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginHorizontal: 20,
-    marginTop: 50,
+    paddingHorizontal: 20,
+    paddingTop: 50,
   },
   avatarCountersContainer: {
     flexDirection: 'row',

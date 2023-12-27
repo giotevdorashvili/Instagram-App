@@ -12,3 +12,7 @@ export type TabStackParamList = {
 export type HomePropTypes = ScreenProps<'Home'>;
 export type SearchPropTypes = ScreenProps<'Search'>;
 export type ProfilePropTypes = ScreenProps<'Profile'>;
+
+export type ProfilePictureProps = {
+  imageUri: string;
+};

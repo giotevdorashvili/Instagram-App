@@ -1,4 +1,3 @@
-import {useEffect, useState} from 'react';
 import {
   Pressable,
   View,
@@ -6,42 +5,20 @@ import {
   ImageBackground,
   StyleSheet,
 } from 'react-native';
-import * as ImagePicker from 'react-native-image-picker';
-import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 import {Icon} from 'react-native-paper';
 
-import {FIREBASE_SRORAGE} from '../../../../services/FirebaseConfig';
+import {ProfilePictureProps} from '../../../../navigators/tabNavigator/TabNavigatorTyps';
+import useUploadImage from '../../../../hooks/services/useUploadImage';
+import {getImageFromDevice} from '../../../../utils/services/utils';
 
-const options: ImagePicker.ImageLibraryOptions = {
-  selectionLimit: 0,
-  mediaType: 'photo',
-};
-
-const fetchProfilePicUri = async () => {
-  return await getDownloadURL(ref(FIREBASE_SRORAGE, 'images-avatar.jpg'));
-};
-
-const ProfilePicture = () => {
-  const [image, setImage] = useState<any>(null);
-
-  useEffect(() => {
-    (async () => {
-      setImage(await fetchProfilePicUri());
-    })();
-  }, []);
+const ProfilePicture: React.FC<ProfilePictureProps> = ({imageUri}) => {
+  const {mutate} = useUploadImage();
 
   const handleUploadImage = async () => {
     try {
-      const storageRef = ref(FIREBASE_SRORAGE, 'images-avatar.jpg');
+      const BlobFile = await getImageFromDevice();
 
-      const results = await ImagePicker.launchImageLibrary(options);
-      const response = await fetch(results?.assets?.[0].uri!);
-      const blob = await response.blob();
-      const snapshot = await uploadBytes(storageRef, blob);
-
-      if (snapshot.metadata.name) {
-        setImage(await fetchProfilePicUri());
-      }
+      mutate(BlobFile);
     } catch (error) {
       console.log(error);
     }
@@ -49,12 +26,12 @@ const ProfilePicture = () => {
 
   return (
     <>
-      {image ? (
+      {imageUri ? (
         <Pressable onPress={handleUploadImage}>
           <Image
             style={styles.avatar}
             source={{
-              uri: image,
+              uri: imageUri,
             }}
           />
         </Pressable>

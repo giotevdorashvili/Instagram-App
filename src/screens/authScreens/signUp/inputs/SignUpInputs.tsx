@@ -32,15 +32,6 @@ const SignUpInputs = () => {
   });
 
   const {status, mutate, error} = useSignUpUser();
-  // const {data: userId, status, mutate, error} = useSignUpUser();
-
-  // useEffect(() => {
-  //   // if (userId) navigation.navigate('Profile', {userId});
-  //   // navigation.navigate('TabNavigator', {
-  //   //   screen: 'Profile',
-  //   //   params: {userId},
-  //   // });
-  // }, [userId, navigation]);
 
   useEffect(() => {
     if (!error) return;
