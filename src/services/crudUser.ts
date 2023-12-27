@@ -6,6 +6,7 @@ import {
   query,
   orderByChild,
   equalTo,
+  update,
 } from 'firebase/database';
 
 import {FIREBASE_DATABASE} from './FirebaseConfig';
@@ -38,6 +39,16 @@ export const fetchUser = async (userId: string) => {
   }
 };
 
+export const updateUser = async (userUid: string, uri: string) => {
+  try {
+    await update(ref(FIREBASE_DATABASE, `users/${userUid}`), {
+      profilePictureUri: uri,
+    });
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const findUserByUsername = async (username: string) => {
   try {
     const snapshot = await get(
@@ -51,5 +62,6 @@ export const findUserByUsername = async (username: string) => {
     return snapshot.exists();
   } catch (error) {
     console.error(error);
+    throw error;
   }
 };

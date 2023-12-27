@@ -3,19 +3,19 @@ import {StyleSheet, View} from 'react-native';
 import {Button, HelperText, TextInput} from 'react-native-paper';
 import {useFormik} from 'formik';
 
-import useAppTheme from '../../../hooks/theme/useApptheme';
-import {getSharedInputprops} from '../../../utils/generic/utils';
-import useSignInUser from '../../../hooks/services/useSignInUser';
-import {useGetNavigation} from '../../../navigators/StackNavigator';
+import useAppTheme from '../../../../hooks/theme/useApptheme';
+import {getSharedInputprops} from '../../../../utils/generic/utils';
+import useSignInUser from '../../../../hooks/services/useSignInUser';
+// import {useGetNavigation} from '../../../../navigators/rootNavigator/RootNavigator';
 import {
   logInValidationSchema,
   LogInInputsInitialState,
-} from '../../../utils/logIn/utils';
+} from '../../../../utils/logIn/utils';
 
 const LogInInputs = () => {
   const [hidePassword, setHidePassword] = useState(true);
 
-  const navigation = useGetNavigation();
+  // const navigation = useGetNavigation();
 
   const {paperTheme} = useAppTheme();
 
@@ -29,13 +29,18 @@ const LogInInputs = () => {
     onSubmit: handleLogInPress,
   });
 
-  const {data, status, mutate, error} = useSignInUser();
+  // const {data, status, mutate, error} = useSignInUser();
+  const {status, mutate, error} = useSignInUser();
 
-  useEffect(() => {
-    if (data?.uid) {
-      navigation.navigate('Profile', {userId: data?.uid});
-    }
-  }, [data?.uid, navigation]);
+  // useEffect(() => {
+  //   if (data?.uid) {
+  //     navigation.navigate('TabNavigator', {
+  //       screen: 'Profile',
+  //       params: {userId: data?.uid},
+  //     });
+
+  //   }
+  // }, [data?.uid, navigation]);
 
   useEffect(() => {
     if (!error) return;

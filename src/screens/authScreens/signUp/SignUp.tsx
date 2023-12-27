@@ -1,14 +1,14 @@
 import {StyleSheet, View, KeyboardAvoidingView, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import GradientBackground from '../../components/gradientBackground/GradientBackground';
-import {ScreenProps} from '../../navigators/StackNavigator';
-import StatusBar from '../../components/statusBar/StatusBar';
-import InstagramLogo from '../../components/logos/InstagramLogo';
-import MetaLogo from '../../components/logos/MetaLogo';
+import GradientBackground from '../../../components/gradientBackground/GradientBackground';
+import StatusBar from '../../../components/statusBar/StatusBar';
+import InstagramLogo from '../../../components/logos/InstagramLogo';
+import MetaLogo from '../../../components/logos/MetaLogo';
 import SignUpInputs from './inputs/SignUpInputs';
+import {SignUpPropTypes} from '../../../navigators/rootNavigator/RootNavigatorTypes';
 
-const SignUp: React.FC<ScreenProps<'SignUp'>> = () => {
+const SignUp: React.FC<SignUpPropTypes> = () => {
   return (
     <GradientBackground>
       <SafeAreaView style={styles.container}>
