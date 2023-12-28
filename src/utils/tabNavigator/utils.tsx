@@ -1,6 +1,9 @@
 import {StyleSheet, View} from 'react-native';
 import {Icon, IconButton, Text} from 'react-native-paper';
+
 import {signOutUser} from '../../services/authentication';
+import {useGetNavigation} from '../../navigators/rootNavigator/RootNavigator';
+import {getImageFromDevice} from '../services/utils';
 
 export const renderTabIcon = (iconName: string, color: string) => {
   return <Icon source={iconName} color={color} size={30} />;
@@ -11,8 +14,22 @@ export const renderHeaderLeft = (username: string) => {
 };
 
 export const renderHeaderRight = () => {
+  return <ProfileHeaderRight />;
+};
+
+const ProfileHeaderRight = () => {
+  const navigation = useGetNavigation();
+
   const handleSignOutPress = () => {
     signOutUser();
+  };
+
+  const handleAddPostPress = async () => {
+    const image = await getImageFromDevice();
+
+    if (!image) return;
+
+    navigation.navigate('NewPost', {imageUri: image.uri});
   };
 
   return (
@@ -20,7 +37,7 @@ export const renderHeaderRight = () => {
       <IconButton
         icon="plus-box-outline"
         size={32}
-        onPress={() => console.log('Pressed+++++++')}
+        onPress={handleAddPostPress}
         style={styles.iconButtons}
       />
 

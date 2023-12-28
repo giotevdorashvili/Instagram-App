@@ -12,6 +12,7 @@ import SignUp from '../../screens/authScreens/signUp/SignUp';
 import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
 import TabNavigator from '../tabNavigator/TabNavigator';
 import {RootStackParamList} from './RootNavigatorTypes';
+import NewPost from '../../screens/newPost/NewPost';
 
 export const useGetNavigation = () => {
   return useNavigation<NativeStackNavigationProp<RootStackParamList>>();
@@ -52,11 +53,25 @@ const RootNavigator = () => {
           />
         </>
       ) : (
-        <Stack.Screen
-          name="TabNavigator"
-          component={TabNavigator}
-          options={{headerShown: false}}
-        />
+        <>
+          <Stack.Screen
+            name="TabNavigator"
+            component={TabNavigator}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="NewPost"
+            component={NewPost}
+            options={{
+              title: '',
+              headerTransparent: true,
+              headerBackTitle: 'New Post',
+              headerBackTitleStyle: {
+                fontSize: 20,
+              },
+            }}
+          />
+        </>
       )}
     </Stack.Navigator>
   );

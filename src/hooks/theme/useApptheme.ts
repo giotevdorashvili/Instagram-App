@@ -7,6 +7,7 @@ export const lightTheme = {
   myOwnProperty: true,
   colors: {
     ...MD3LightTheme.colors,
+    main: 'white',
     primary: 'grey',
     outline: '#d5d8de',
     blue: '#0f71f2',
@@ -22,6 +23,7 @@ export const darkTheme = {
   myOwnProperty: true,
   colors: {
     ...MD3DarkTheme.colors,
+    main: 'black',
     primary: '#d5d8de',
     blue: '#0f71f2',
     lightBlue: '#40b2f5',

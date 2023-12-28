@@ -15,9 +15,16 @@ export const renderProfileTabIcon = (uri: string) => {
 
 export const getImageFromDevice = async () => {
   const results = await ImagePicker.launchImageLibrary(options);
-  const response = await fetch(results?.assets?.[0].uri!);
 
-  return await response.blob();
+  if (results.didCancel) return;
+
+  const uri = results?.assets?.[0].uri;
+
+  const response = await fetch(uri!);
+
+  const BlobFile = await response.blob();
+
+  return {uri, BlobFile};
 };
 
 export const uploadImageToFirebase = async (BlobFile: Blob, uid: string) => {

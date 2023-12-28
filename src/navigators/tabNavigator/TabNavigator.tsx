@@ -6,10 +6,13 @@ import Profile from '../../screens/tabScreens/profile/Profile';
 import {TabNavigatorPropTypes} from '../rootNavigator/RootNavigatorTypes';
 import {TabStackParamList} from './TabNavigatorTyps';
 import {renderHeaderRight, renderTabIcon} from '../../utils/tabNavigator/utils';
+import useAppTheme from '../../hooks/theme/useApptheme';
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
 const TabNavigator: React.FC<TabNavigatorPropTypes> = () => {
+  const {paperTheme} = useAppTheme();
+
   return (
     <Tab.Navigator
       initialRouteName="Profile"
@@ -18,6 +21,7 @@ const TabNavigator: React.FC<TabNavigatorPropTypes> = () => {
         title: '',
         tabBarStyle: {
           paddingTop: 10,
+          backgroundColor: paperTheme.colors.main,
         },
       }}>
       <Tab.Screen

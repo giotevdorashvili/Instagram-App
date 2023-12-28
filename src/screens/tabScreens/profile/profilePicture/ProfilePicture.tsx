@@ -16,9 +16,11 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({imageUri}) => {
 
   const handleUploadImage = async () => {
     try {
-      const BlobFile = await getImageFromDevice();
+      const image = await getImageFromDevice();
 
-      mutate(BlobFile);
+      if (!image) return;
+
+      mutate(image.BlobFile);
     } catch (error) {
       console.log(error);
     }
