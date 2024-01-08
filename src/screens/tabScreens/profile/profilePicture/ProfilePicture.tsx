@@ -7,20 +7,25 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-paper';
 
-import {ProfilePictureProps} from '../../../../navigators/tabNavigator/TabNavigatorTyps';
-import useUploadImage from '../../../../hooks/services/useUploadImage';
-import {getImageFromDevice} from '../../../../utils/services/utils';
+import {ProfilePictureProps} from '../../../../navigators/tabNavigator/TabNavigatorTypes';
+import useUploadProfilePic from '../../../../hooks/services/useUploadProfilePic';
+import {
+  getLocalImageUriFromDevice,
+  transformLocalUriToBlob,
+} from '../../../../utils/services/utils';
 
 const ProfilePicture: React.FC<ProfilePictureProps> = ({imageUri}) => {
-  const {mutate} = useUploadImage();
+  const {mutate} = useUploadProfilePic();
 
   const handleUploadImage = async () => {
     try {
-      const image = await getImageFromDevice();
+      const uri = await getLocalImageUriFromDevice();
 
-      if (!image) return;
+      if (!uri) return;
 
-      mutate(image.BlobFile);
+      const blobFile = await transformLocalUriToBlob(uri);
+
+      mutate(blobFile);
     } catch (error) {
       console.log(error);
     }

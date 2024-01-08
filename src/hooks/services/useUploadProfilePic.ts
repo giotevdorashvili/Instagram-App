@@ -1,22 +1,25 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
 import {
-  getImageFromFirebase,
-  uploadImageToFirebase,
+  uploadImageToFirebaseStorage,
+  getImageFromFirebaseStorage,
 } from '../../utils/services/utils';
 import {updateUser} from '../../services/crudUser';
 import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
 
-const useUploadImage = () => {
+const useUploadProfilePic = () => {
   const userId = FIREBASE_AUTH.currentUser?.uid;
 
   const queryClient = useQueryClient();
 
+  const storageImageName = `images-avatar-${userId!}`;
+
   return useMutation({
-    mutationFn: (BlobFile: Blob) => uploadImageToFirebase(BlobFile, userId!),
+    mutationFn: (BlobFile: Blob) =>
+      uploadImageToFirebaseStorage(storageImageName, BlobFile),
 
     onSuccess: async () => {
-      const uri = await getImageFromFirebase(userId!);
+      const uri = await getImageFromFirebaseStorage(storageImageName);
 
       await updateUser(userId!, uri);
 
@@ -25,4 +28,4 @@ const useUploadImage = () => {
   });
 };
 
-export default useUploadImage;
+export default useUploadProfilePic;

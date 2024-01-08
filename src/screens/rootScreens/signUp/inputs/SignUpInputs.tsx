@@ -7,7 +7,6 @@ import {styles} from './InputStyles';
 import {getSharedInputprops} from '../../../../utils/generic/utils';
 import useAppTheme from '../../../../hooks/theme/useApptheme';
 import {InputValuTypes} from '../SignUpTypes';
-// import {useGetNavigation} from '../../../../navigators/rootNavigator/RootNavigator';
 import useSignUpUser from '../../../../hooks/services/useSignUpUser';
 import {
   signUpInputsInitialState,
@@ -16,8 +15,6 @@ import {
 
 const SignUpInputs = () => {
   const [hidePassword, setHidePassword] = useState(true);
-
-  // const navigation = useGetNavigation();
 
   const {paperTheme} = useAppTheme();
 

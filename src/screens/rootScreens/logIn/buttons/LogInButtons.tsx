@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 
 import useAppTheme from '../../../../hooks/theme/useApptheme';
-import {useGetNavigation} from '../../../../navigators/rootNavigator/RootNavigator';
+import {useRootNavigation} from '../../../../navigators/rootNavigator/RootNavigator';
 
 export const ForgotPasswordButton = () => {
   const {paperTheme} = useAppTheme();
@@ -22,7 +22,7 @@ export const ForgotPasswordButton = () => {
 export const CreateAccountButton = () => {
   const {paperTheme} = useAppTheme();
 
-  const navigation = useGetNavigation();
+  const navigation = useRootNavigation();
 
   return (
     <Button

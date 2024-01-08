@@ -1,4 +1,3 @@
-import {Image, StyleSheet} from 'react-native';
 import * as ImagePicker from 'react-native-image-picker';
 import {getDownloadURL, ref, uploadBytes} from 'firebase/storage';
 
@@ -9,38 +8,30 @@ export const options: ImagePicker.ImageLibraryOptions = {
   mediaType: 'photo',
 };
 
-export const renderProfileTabIcon = (uri: string) => {
-  return <Image style={styles.avatarIcon} source={{uri}} />;
-};
-
-export const getImageFromDevice = async () => {
+export const getLocalImageUriFromDevice = async () => {
   const results = await ImagePicker.launchImageLibrary(options);
 
   if (results.didCancel) return;
 
-  const uri = results?.assets?.[0].uri;
-
-  const response = await fetch(uri!);
-
-  const BlobFile = await response.blob();
-
-  return {uri, BlobFile};
+  return results?.assets?.[0].uri;
 };
 
-export const uploadImageToFirebase = async (BlobFile: Blob, uid: string) => {
-  const storageRef = ref(FIREBASE_SRORAGE, `images-avatar-${uid}`);
+export const transformLocalUriToBlob = async (uri: string) => {
+  const response = await fetch(uri!);
 
+  return await response.blob();
+};
+
+export const uploadImageToFirebaseStorage = async (
+  storageImageName: string,
+  BlobFile: Blob,
+) => {
+  const storageRef = ref(FIREBASE_SRORAGE, storageImageName);
+
+  storageRef.bucket;
   return await uploadBytes(storageRef, BlobFile);
 };
 
-export const getImageFromFirebase = async (uid: string) => {
-  return await getDownloadURL(ref(FIREBASE_SRORAGE, `images-avatar-${uid}`));
+export const getImageFromFirebaseStorage = async (storageImageName: string) => {
+  return await getDownloadURL(ref(FIREBASE_SRORAGE, storageImageName));
 };
-
-const styles = StyleSheet.create({
-  avatarIcon: {
-    height: 30,
-    width: 30,
-    borderRadius: 100,
-  },
-});

@@ -1,12 +1,18 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import {useNavigation} from '@react-navigation/native';
 
 import Home from '../../screens/tabScreens/home/Home';
 import Search from '../../screens/tabScreens/search/Search';
 import Profile from '../../screens/tabScreens/profile/Profile';
 import {TabNavigatorPropTypes} from '../rootNavigator/RootNavigatorTypes';
-import {TabStackParamList} from './TabNavigatorTyps';
-import {renderHeaderRight, renderTabIcon} from '../../utils/tabNavigator/utils';
+import {TabStackParamList} from './TabNavigatorTypes';
 import useAppTheme from '../../hooks/theme/useApptheme';
+import {renderHeaderRight, renderTabIcon} from '../../utils/tabNavigator/utils';
+
+export const useTabNavigation = () => {
+  return useNavigation<NativeStackNavigationProp<TabStackParamList>>();
+};
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
@@ -20,7 +26,6 @@ const TabNavigator: React.FC<TabNavigatorPropTypes> = () => {
         headerTitle: '',
         title: '',
         tabBarStyle: {
-          paddingTop: 10,
           backgroundColor: paperTheme.colors.main,
         },
       }}>
@@ -28,6 +33,8 @@ const TabNavigator: React.FC<TabNavigatorPropTypes> = () => {
         name="Home"
         component={Home}
         options={{
+          headerShown: false,
+          headerTransparent: true,
           tabBarIcon: ({color}) => renderTabIcon('home-outline', color),
         }}
       />

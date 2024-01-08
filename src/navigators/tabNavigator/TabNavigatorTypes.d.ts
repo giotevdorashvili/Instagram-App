@@ -6,7 +6,7 @@ export type ScreenProps<T extends keyof TabStackParamList> =
 export type TabStackParamList = {
   Home: undefined;
   Search: undefined;
-  Profile: {userId: string; username: string};
+  Profile: undefined;
 };
 
 export type HomePropTypes = ScreenProps<'Home'>;

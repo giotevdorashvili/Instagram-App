@@ -7,14 +7,14 @@ import {useNavigation} from '@react-navigation/native';
 import {User, onAuthStateChanged} from 'firebase/auth';
 import {ActivityIndicator} from 'react-native-paper';
 
-import LogIn from '../../screens/authScreens/logIn/LogIn';
-import SignUp from '../../screens/authScreens/signUp/SignUp';
+import LogIn from '../../screens/rootScreens/logIn/LogIn';
+import SignUp from '../../screens/rootScreens/signUp/SignUp';
 import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
 import TabNavigator from '../tabNavigator/TabNavigator';
 import {RootStackParamList} from './RootNavigatorTypes';
-import NewPost from '../../screens/newPost/NewPost';
+import NewPost from '../../screens/rootScreens/newPost/NewPost';
 
-export const useGetNavigation = () => {
+export const useRootNavigation = () => {
   return useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 };
 

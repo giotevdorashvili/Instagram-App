@@ -6,7 +6,6 @@ import {useFormik} from 'formik';
 import useAppTheme from '../../../../hooks/theme/useApptheme';
 import {getSharedInputprops} from '../../../../utils/generic/utils';
 import useSignInUser from '../../../../hooks/services/useSignInUser';
-// import {useGetNavigation} from '../../../../navigators/rootNavigator/RootNavigator';
 import {
   logInValidationSchema,
   LogInInputsInitialState,
@@ -14,8 +13,6 @@ import {
 
 const LogInInputs = () => {
   const [hidePassword, setHidePassword] = useState(true);
-
-  // const navigation = useGetNavigation();
 
   const {paperTheme} = useAppTheme();
 
@@ -29,18 +26,7 @@ const LogInInputs = () => {
     onSubmit: handleLogInPress,
   });
 
-  // const {data, status, mutate, error} = useSignInUser();
   const {status, mutate, error} = useSignInUser();
-
-  // useEffect(() => {
-  //   if (data?.uid) {
-  //     navigation.navigate('TabNavigator', {
-  //       screen: 'Profile',
-  //       params: {userId: data?.uid},
-  //     });
-
-  //   }
-  // }, [data?.uid, navigation]);
 
   useEffect(() => {
     if (!error) return;

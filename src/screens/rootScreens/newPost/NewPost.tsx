@@ -1,14 +1,24 @@
+import {useState} from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {NewPostPropTypes} from '../../navigators/rootNavigator/RootNavigatorTypes';
-import StatusBar from '../../components/statusBar/StatusBar';
-import {Button, TextInput} from 'react-native-paper';
-import useAppTheme from '../../hooks/theme/useApptheme';
-import {useState} from 'react';
+import {NewPostPropTypes} from '../../../navigators/rootNavigator/RootNavigatorTypes';
+import StatusBar from '../../../components/statusBar/StatusBar';
+import {Button, Text, TextInput} from 'react-native-paper';
+import useAppTheme from '../../../hooks/theme/useApptheme';
+import {
+  getImageFromFirebaseStorage,
+  transformLocalUriToBlob,
+  uploadImageToFirebaseStorage,
+} from '../../../utils/services/utils';
+import useCreatePost from '../../../hooks/services/useCreatePost';
+import {FIREBASE_AUTH} from '../../../services/FirebaseConfig';
 
 const NewPost: React.FC<NewPostPropTypes> = ({route}) => {
   const [postTitle, setPostTitle] = useState<string>('');
+  const {status, mutate, error} = useCreatePost();
+
+  const userId = FIREBASE_AUTH.currentUser?.uid;
 
   const {
     paperTheme: {
@@ -18,18 +28,38 @@ const NewPost: React.FC<NewPostPropTypes> = ({route}) => {
 
   const styles = getStyles(main, lightBlue);
 
-  const handleSharePostPress = () => {
-    console.log(postTitle);
+  const imageUri = route.params.imageUri;
+
+  const handleSharePostPress = async () => {
+    const timeStamp = Date.now();
+
+    const blobFile = await transformLocalUriToBlob(imageUri!);
+
+    const storageImageName = `images-post-${userId!}-${timeStamp}`;
+
+    const res = await uploadImageToFirebaseStorage(storageImageName, blobFile);
+
+    if (!res.ref) return;
+
+    const postImageUri = await getImageFromFirebaseStorage(storageImageName);
+
+    mutate({
+      userId: userId!,
+      postTitle,
+      postImageUri,
+      timeStamp,
+    });
   };
+
+  if (error) {
+    return <Text style={styles.container}>{error.message}</Text>;
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar />
 
-      <Image
-        source={{uri: route.params.imageUri}}
-        style={styles.imagePreview}
-      />
+      <Image source={{uri: imageUri}} style={styles.imagePreview} />
 
       <TextInput
         mode="outlined"
@@ -39,6 +69,7 @@ const NewPost: React.FC<NewPostPropTypes> = ({route}) => {
       />
 
       <Button
+        loading={status === 'pending'}
         textColor="white"
         mode="contained"
         style={styles.button}

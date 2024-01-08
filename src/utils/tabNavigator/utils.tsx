@@ -1,12 +1,13 @@
-import {StyleSheet, View} from 'react-native';
-import {Icon, IconButton, Text} from 'react-native-paper';
-
-import {signOutUser} from '../../services/authentication';
-import {useGetNavigation} from '../../navigators/rootNavigator/RootNavigator';
-import {getImageFromDevice} from '../services/utils';
+import {StyleSheet, Image} from 'react-native';
+import {Icon, Text} from 'react-native-paper';
+import ProfileRightHeader from '../../screens/tabScreens/profile/profileRightHeader/ProfileRightHeader';
 
 export const renderTabIcon = (iconName: string, color: string) => {
   return <Icon source={iconName} color={color} size={30} />;
+};
+
+export const renderProfileTabIcon = (uri: string) => {
+  return <Image style={styles.avatarIcon} source={{uri}} />;
 };
 
 export const renderHeaderLeft = (username: string) => {
@@ -14,41 +15,7 @@ export const renderHeaderLeft = (username: string) => {
 };
 
 export const renderHeaderRight = () => {
-  return <ProfileHeaderRight />;
-};
-
-const ProfileHeaderRight = () => {
-  const navigation = useGetNavigation();
-
-  const handleSignOutPress = () => {
-    signOutUser();
-  };
-
-  const handleAddPostPress = async () => {
-    const image = await getImageFromDevice();
-
-    if (!image) return;
-
-    navigation.navigate('NewPost', {imageUri: image.uri});
-  };
-
-  return (
-    <View style={styles.buttonsContainer}>
-      <IconButton
-        icon="plus-box-outline"
-        size={32}
-        onPress={handleAddPostPress}
-        style={styles.iconButtons}
-      />
-
-      <IconButton
-        icon="logout-variant"
-        size={32}
-        onPress={handleSignOutPress}
-        style={styles.iconButtons}
-      />
-    </View>
-  );
+  return <ProfileRightHeader />;
 };
 
 const styles = StyleSheet.create({
@@ -57,18 +24,9 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     marginLeft: 20,
   },
-  buttonsContainer: {
-    flexDirection: 'row',
-    marginRight: 20,
-  },
-  iconButtons: {
-    margin: 0,
-  },
-  avatar: {
-    height: 25,
-    width: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
+  avatarIcon: {
+    height: 30,
+    width: 30,
     borderRadius: 100,
   },
 });
