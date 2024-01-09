@@ -9,7 +9,7 @@ import Animated, {
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ActivityIndicator} from 'react-native-paper';
+import {ActivityIndicator, Text} from 'react-native-paper';
 
 import {HomePropTypes} from '../../../navigators/tabNavigator/TabNavigatorTypes';
 import useAppTheme from '../../../hooks/theme/useApptheme';
@@ -20,7 +20,7 @@ import {PostTypes} from './HomeTypes';
 import {renderItem} from '../../../utils/home/utils';
 
 const Home: React.FC<HomePropTypes> = () => {
-  const {data: posts, isLoading} = useFetchUserPosts();
+  const {data: posts, isLoading, error} = useFetchUserPosts();
 
   const {paperTheme} = useAppTheme();
 
@@ -59,6 +59,8 @@ const Home: React.FC<HomePropTypes> = () => {
   }));
 
   if (isLoading) return <ActivityIndicator style={styles.container} />;
+
+  if (error) return <Text style={styles.container}>{error.message}</Text>;
 
   return (
     <SafeAreaView style={[styles.container, {backgroundColor}]}>

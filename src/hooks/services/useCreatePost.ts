@@ -10,7 +10,7 @@ const useCreatePost = () => {
 
   const userId = FIREBASE_AUTH.currentUser?.uid;
 
-  return useMutation({
+  const mutationData = useMutation({
     mutationFn: createPost,
     onSuccess: async () => {
       navigation.navigate('TabNavigator', {screen: 'Home'});
@@ -18,6 +18,8 @@ const useCreatePost = () => {
       queryClient.invalidateQueries({queryKey: ['posts', userId]});
     },
   });
+
+  return {...mutationData, uidExists: !!userId};
 };
 
 export default useCreatePost;

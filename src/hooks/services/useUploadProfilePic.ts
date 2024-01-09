@@ -12,9 +12,9 @@ const useUploadProfilePic = () => {
 
   const queryClient = useQueryClient();
 
-  const storageImageName = `images-avatar-${userId!}`;
+  const storageImageName = `images-avatar-${userId}`;
 
-  return useMutation({
+  const mutationData = useMutation({
     mutationFn: (BlobFile: Blob) =>
       uploadImageToFirebaseStorage(storageImageName, BlobFile),
 
@@ -26,6 +26,8 @@ const useUploadProfilePic = () => {
       queryClient.invalidateQueries({queryKey: [userId]});
     },
   });
+
+  return {...mutationData, uidExists: !!userId};
 };
 
 export default useUploadProfilePic;

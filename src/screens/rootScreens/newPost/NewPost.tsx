@@ -6,17 +6,19 @@ import {NewPostPropTypes} from '../../../navigators/rootNavigator/RootNavigatorT
 import StatusBar from '../../../components/statusBar/StatusBar';
 import {Button, Text, TextInput} from 'react-native-paper';
 import useAppTheme from '../../../hooks/theme/useApptheme';
+import useCreatePost from '../../../hooks/services/useCreatePost';
+import {FIREBASE_AUTH} from '../../../services/FirebaseConfig';
+import {alertUidError} from '../../../utils/generic/utils';
 import {
   getImageFromFirebaseStorage,
   transformLocalUriToBlob,
   uploadImageToFirebaseStorage,
 } from '../../../utils/services/utils';
-import useCreatePost from '../../../hooks/services/useCreatePost';
-import {FIREBASE_AUTH} from '../../../services/FirebaseConfig';
 
 const NewPost: React.FC<NewPostPropTypes> = ({route}) => {
   const [postTitle, setPostTitle] = useState<string>('');
-  const {status, mutate, error} = useCreatePost();
+
+  const {mutate, error, status, uidExists} = useCreatePost();
 
   const userId = FIREBASE_AUTH.currentUser?.uid;
 
@@ -35,7 +37,9 @@ const NewPost: React.FC<NewPostPropTypes> = ({route}) => {
 
     const blobFile = await transformLocalUriToBlob(imageUri!);
 
-    const storageImageName = `images-post-${userId!}-${timeStamp}`;
+    if (!uidExists || !userId) return alertUidError();
+
+    const storageImageName = `images-post-${userId}-${timeStamp}`;
 
     const res = await uploadImageToFirebaseStorage(storageImageName, blobFile);
 

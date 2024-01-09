@@ -15,15 +15,15 @@ import useAppTheme from '../../../hooks/theme/useApptheme';
 const Profile: React.FC<ProfilePropTypes> = ({navigation}) => {
   const {paperTheme} = useAppTheme();
 
-  const {data: profileData, isLoading} = useFetchUser();
+  const {data, isLoading, error} = useFetchUser();
 
-  const username = profileData?.username;
-  const imageUri = profileData?.profilePictureUri;
+  const username = data?.username;
+  const imageUri = data?.profilePictureUri;
+  const fullName = data?.fullName;
+
   const backgroundColor = paperTheme.colors.main;
 
   useEffect(() => {
-    if (!imageUri || !username) return;
-
     navigation.setOptions({
       tabBarIcon: () => renderProfileTabIcon(imageUri),
       headerLeft: () => renderHeaderLeft(username),
@@ -31,6 +31,8 @@ const Profile: React.FC<ProfilePropTypes> = ({navigation}) => {
   }, [navigation, imageUri, username]);
 
   if (isLoading) return <ActivityIndicator style={styles.container} />;
+
+  if (error) return <Text style={styles.container}>{error.message}</Text>;
 
   return (
     <SafeAreaView style={[styles.container, {backgroundColor}]}>
@@ -42,7 +44,7 @@ const Profile: React.FC<ProfilePropTypes> = ({navigation}) => {
         <ProfileCounter />
       </View>
 
-      <Text style={styles.text}>{profileData?.fullName}</Text>
+      <Text style={styles.text}>{fullName}</Text>
     </SafeAreaView>
   );
 };

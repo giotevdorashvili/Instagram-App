@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-paper';
 
+import {alertUidError} from '../../../../utils/generic/utils';
 import {ProfilePictureProps} from '../../../../navigators/tabNavigator/TabNavigatorTypes';
 import useUploadProfilePic from '../../../../hooks/services/useUploadProfilePic';
 import {
@@ -15,10 +16,12 @@ import {
 } from '../../../../utils/services/utils';
 
 const ProfilePicture: React.FC<ProfilePictureProps> = ({imageUri}) => {
-  const {mutate} = useUploadProfilePic();
+  const {mutate, uidExists} = useUploadProfilePic();
 
   const handleUploadImage = async () => {
     try {
+      if (!uidExists) return alertUidError();
+
       const uri = await getLocalImageUriFromDevice();
 
       if (!uri) return;
