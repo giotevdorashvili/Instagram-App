@@ -1,11 +1,12 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 
+import {updateUser} from '../../services/crudUser';
+import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
+import {alert} from '../../utils/generic/utils';
 import {
   uploadImageToFirebaseStorage,
   getImageFromFirebaseStorage,
 } from '../../utils/services/utils';
-import {updateUser} from '../../services/crudUser';
-import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
 
 const useUploadProfilePic = () => {
   const userId = FIREBASE_AUTH.currentUser?.uid;
@@ -19,11 +20,15 @@ const useUploadProfilePic = () => {
       uploadImageToFirebaseStorage(storageImageName, BlobFile),
 
     onSuccess: async () => {
-      const uri = await getImageFromFirebaseStorage(storageImageName);
+      try {
+        const uri = await getImageFromFirebaseStorage(storageImageName);
 
-      await updateUser(userId!, uri);
+        await updateUser(userId!, uri);
 
-      queryClient.invalidateQueries({queryKey: [userId]});
+        queryClient.invalidateQueries({queryKey: [userId]});
+      } catch (error) {
+        alert(error as string);
+      }
     },
   });
 

@@ -19,19 +19,17 @@ const ProfilePicture: React.FC<ProfilePictureProps> = ({imageUri}) => {
   const {mutate, uidExists} = useUploadProfilePic();
 
   const handleUploadImage = async () => {
-    try {
-      if (!uidExists) return alertUidError();
+    if (!uidExists) return alertUidError();
 
-      const uri = await getLocalImageUriFromDevice();
+    const uri = await getLocalImageUriFromDevice();
 
-      if (!uri) return;
+    if (!uri) return;
 
-      const blobFile = await transformLocalUriToBlob(uri);
+    const blobFile = await transformLocalUriToBlob(uri);
 
-      mutate(blobFile);
-    } catch (error) {
-      console.log(error);
-    }
+    if (!blobFile) return;
+
+    mutate(blobFile);
   };
 
   return (

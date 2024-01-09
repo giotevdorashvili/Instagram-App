@@ -30,3 +30,13 @@ export const alertUidError = () => {
     },
   ]);
 };
+
+export const alert = (messsage: string) => {
+  Alert.alert('', messsage, [
+    {
+      text: 'Ok',
+      onPress: () => console.log(''),
+      style: 'cancel',
+    },
+  ]);
+};

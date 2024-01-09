@@ -9,25 +9,15 @@ export const createPost = async ({
   postImageUri,
   timeStamp,
 }: CreatePostTypes) => {
-  try {
-    await set(ref(FIREBASE_DATABASE, `posts/${userId}/${timeStamp}`), {
-      postTitle,
-      postImageUri,
-      timeStamp,
-    });
-  } catch (error) {
-    throw error;
-  }
+  await set(ref(FIREBASE_DATABASE, `posts/${userId}/${timeStamp}`), {
+    postTitle,
+    postImageUri,
+    timeStamp,
+  });
 };
 
 export const fetchUserPosts = async (userId: string) => {
-  try {
-    const snapshot = await get(
-      child(ref(FIREBASE_DATABASE), `posts/${userId}`),
-    );
+  const snapshot = await get(child(ref(FIREBASE_DATABASE), `posts/${userId}`));
 
-    return snapshot.val();
-  } catch (error) {
-    throw error;
-  }
+  return snapshot.val();
 };
