@@ -10,9 +10,9 @@ import {
   ForgotPasswordButton,
   CreateAccountButton,
 } from './buttons/LogInButtons';
-import {LogInPropTypes} from '../../../navigators/rootNavigator/RootNavigatorTypes';
+import {RootScreenProps} from '../../../navigators/rootNavigator/RootNavigatorTypes';
 
-const LogIn: React.FC<LogInPropTypes> = () => {
+const LogIn: React.FC<RootScreenProps<'LogIn'>> = () => {
   return (
     <GradientBackground>
       <SafeAreaView style={styles.container}>

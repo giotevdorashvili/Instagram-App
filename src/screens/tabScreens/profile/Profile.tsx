@@ -5,14 +5,14 @@ import {ActivityIndicator, Text} from 'react-native-paper';
 
 import useFetchUser from '../../../hooks/services/useFetchUser';
 import StatusBar from '../../../components/statusBar/StatusBar';
-import {ProfilePropTypes} from '../../../navigators/tabNavigator/TabNavigatorTypes';
+import {TabScreenProps} from '../../../navigators/tabNavigator/TabNavigatorTypes';
 import ProfilePicture from './profilePicture/ProfilePicture';
 import ProfileCounter from './profileCounter/ProfileCounter';
 import {renderProfileTabIcon} from '../../../utils/tabNavigator/utils';
 import {renderHeaderLeft} from '../../../utils/tabNavigator/utils';
 import useAppTheme from '../../../hooks/theme/useApptheme';
 
-const Profile: React.FC<ProfilePropTypes> = ({navigation}) => {
+const Profile: React.FC<TabScreenProps<'Profile'>> = ({navigation}) => {
   const {paperTheme} = useAppTheme();
 
   const {data, isLoading, error} = useFetchUser();

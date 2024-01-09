@@ -5,7 +5,7 @@ import {useNavigation} from '@react-navigation/native';
 import Home from '../../screens/tabScreens/home/Home';
 import Search from '../../screens/tabScreens/search/Search';
 import Profile from '../../screens/tabScreens/profile/Profile';
-import {TabNavigatorPropTypes} from '../rootNavigator/RootNavigatorTypes';
+import {RootScreenProps} from '../rootNavigator/RootNavigatorTypes';
 import {TabStackParamList} from './TabNavigatorTypes';
 import useAppTheme from '../../hooks/theme/useApptheme';
 import {renderHeaderRight, renderTabIcon} from '../../utils/tabNavigator/utils';
@@ -16,7 +16,7 @@ export const useTabNavigation = () => {
 
 const Tab = createBottomTabNavigator<TabStackParamList>();
 
-const TabNavigator: React.FC<TabNavigatorPropTypes> = () => {
+const TabNavigator: React.FC<RootScreenProps<'TabNavigator'>> = () => {
   const {paperTheme} = useAppTheme();
 
   return (

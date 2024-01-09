@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {NewPostPropTypes} from '../../../navigators/rootNavigator/RootNavigatorTypes';
+import {RootScreenProps} from '../../../navigators/rootNavigator/RootNavigatorTypes';
 import StatusBar from '../../../components/statusBar/StatusBar';
 import {Button, Text, TextInput} from 'react-native-paper';
 import useAppTheme from '../../../hooks/theme/useApptheme';
@@ -15,7 +15,7 @@ import {
   uploadImageToFirebaseStorage,
 } from '../../../utils/services/utils';
 
-const NewPost: React.FC<NewPostPropTypes> = ({route}) => {
+const NewPost: React.FC<RootScreenProps<'NewPost'>> = ({route}) => {
   const [postTitle, setPostTitle] = useState<string>('');
 
   const {mutate, error, status, uidExists} = useCreatePost();

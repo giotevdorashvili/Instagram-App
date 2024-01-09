@@ -11,7 +11,7 @@ import Animated, {
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {ActivityIndicator, Text} from 'react-native-paper';
 
-import {HomePropTypes} from '../../../navigators/tabNavigator/TabNavigatorTypes';
+import {TabScreenProps} from '../../../navigators/tabNavigator/TabNavigatorTypes';
 import useAppTheme from '../../../hooks/theme/useApptheme';
 import useFetchUserPosts from '../../../hooks/services/useFetchUserPosts';
 import NoPostsTitle from './noPostsTitle/NoPostsTitle';
@@ -19,7 +19,7 @@ import InstagramWordLogo from '../../../components/logos/InstagramWordLogo';
 import {PostTypes} from './HomeTypes';
 import {renderItem} from '../../../utils/home/utils';
 
-const Home: React.FC<HomePropTypes> = () => {
+const Home: React.FC<TabScreenProps<'Home'>> = () => {
   const {data: posts, isLoading, error} = useFetchUserPosts();
 
   const {paperTheme} = useAppTheme();

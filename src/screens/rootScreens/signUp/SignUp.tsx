@@ -6,9 +6,9 @@ import StatusBar from '../../../components/statusBar/StatusBar';
 import InstagramLogo from '../../../components/logos/InstagramLogo';
 import MetaLogo from '../../../components/logos/MetaLogo';
 import SignUpInputs from './inputs/SignUpInputs';
-import {SignUpPropTypes} from '../../../navigators/rootNavigator/RootNavigatorTypes';
+import {RootScreenProps} from '../../../navigators/rootNavigator/RootNavigatorTypes';
 
-const SignUp: React.FC<SignUpPropTypes> = () => {
+const SignUp: React.FC<RootScreenProps<'SignUp'>> = () => {
   return (
     <GradientBackground>
       <SafeAreaView style={styles.container}>
