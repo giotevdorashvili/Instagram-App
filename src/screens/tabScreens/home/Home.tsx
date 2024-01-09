@@ -13,14 +13,14 @@ import {ActivityIndicator} from 'react-native-paper';
 
 import {HomePropTypes} from '../../../navigators/tabNavigator/TabNavigatorTypes';
 import useAppTheme from '../../../hooks/theme/useApptheme';
-import useFetchPosts from '../../../hooks/services/useFetchPosts';
+import useFetchUserPosts from '../../../hooks/services/useFetchUserPosts';
 import NoPostsTitle from './noPostsTitle/NoPostsTitle';
 import InstagramWordLogo from '../../../components/logos/InstagramWordLogo';
 import {PostTypes} from './HomeTypes';
 import {renderItem} from '../../../utils/home/utils';
 
 const Home: React.FC<HomePropTypes> = () => {
-  const {data: posts, isLoading} = useFetchPosts();
+  const {data: posts, isLoading} = useFetchUserPosts();
 
   const {paperTheme} = useAppTheme();
 

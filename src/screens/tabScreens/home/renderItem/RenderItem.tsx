@@ -75,7 +75,7 @@ const RenderItem = ({item}: {item: PostTypes}) => {
           placeholder="Add a comment..."
           outlineStyle={[styles.inputOutline, {backgroundColor: main}]}
           contentStyle={styles.inputContent}
-          // onChangeText={setPostTitle}
+          // onChangeText={}
         />
       </View>
       <View style={styles.pairContainer}>

@@ -2,7 +2,7 @@ import {View, StyleSheet} from 'react-native';
 import {Text} from 'react-native-paper';
 
 import {ActivityIndicator} from 'react-native-paper';
-import useFetchPosts from '../../../../../hooks/services/useFetchPosts';
+import useFetchPosts from '../../../../../hooks/services/useFetchUserPosts';
 
 const PostsCounter = () => {
   const {data: posts, isLoading} = useFetchPosts();

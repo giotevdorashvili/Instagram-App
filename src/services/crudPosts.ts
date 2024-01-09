@@ -20,7 +20,7 @@ export const createPost = async ({
   }
 };
 
-export const fetchPosts = async (userId: string) => {
+export const fetchUserPosts = async (userId: string) => {
   try {
     const snapshot = await get(
       child(ref(FIREBASE_DATABASE), `posts/${userId}`),

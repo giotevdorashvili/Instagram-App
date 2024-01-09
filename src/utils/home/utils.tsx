@@ -13,7 +13,7 @@ export const calculatePostAge = (milliseconds: number) => {
   let postAge;
 
   if (seconds < 60) {
-    postAge = `${seconds} ${seconds < 2 ? 'Just now' : 'seconds ago'} `;
+    postAge = seconds < 2 ? 'Just now' : `${seconds} seconds ago`;
   } else if (minutes < 60) {
     postAge = `${minutes} ${minutes === 1 ? 'minute' : 'minutes'} ago`;
   } else if (hours < 24) {
