@@ -4,20 +4,17 @@ import {TextInput, HelperText, Button} from 'react-native-paper';
 import {useFormik} from 'formik';
 
 import {styles} from './InputStyles';
-import {getSharedInputprops} from '../../../utils/generic/utils';
-import useAppTheme from '../../../hooks/theme/useApptheme';
+import {getSharedInputprops} from '../../../../utils/generic/utils';
+import useAppTheme from '../../../../hooks/theme/useApptheme';
 import {InputValuTypes} from '../SignUpTypes';
-import {useGetNavigation} from '../../../navigators/StackNavigator';
-import useSignUpUser from '../../../hooks/services/useSignUpUser';
+import useSignUpUser from '../../../../hooks/services/useSignUpUser';
 import {
   signUpInputsInitialState,
   signUpValidationSchema,
-} from '../../../utils/signUp/utils';
+} from '../../../../utils/signUp/utils';
 
 const SignUpInputs = () => {
   const [hidePassword, setHidePassword] = useState(true);
-
-  const navigation = useGetNavigation();
 
   const {paperTheme} = useAppTheme();
 
@@ -31,15 +28,8 @@ const SignUpInputs = () => {
     onSubmit: handleSubmit,
   });
 
-  const {data: userId, status, mutate, error} = useSignUpUser();
+  const {status, mutate, error} = useSignUpUser();
 
-  useEffect(() => {
-    if (userId) navigation.navigate('Profile', {userId});
-  }, [userId, navigation]);
-
-  function handleSubmit(values: InputValuTypes) {
-    mutate(values);
-  }
   useEffect(() => {
     if (!error) return;
 
@@ -52,6 +42,10 @@ const SignUpInputs = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
+
+  function handleSubmit(values: InputValuTypes) {
+    mutate(values);
+  }
 
   const getInputClearButton = (type: string) => {
     return (
