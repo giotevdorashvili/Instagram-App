@@ -16,11 +16,21 @@ import useAppTheme from '../../../hooks/theme/useApptheme';
 import useFetchUserPosts from '../../../hooks/services/useFetchUserPosts';
 import NoPostsTitle from './noPostsTitle/NoPostsTitle';
 import InstagramWordLogo from '../../../components/logos/InstagramWordLogo';
-import {PostTypes} from './HomeTypes';
 import {renderItem} from '../../../utils/home/utils';
 
 const Home: React.FC<TabScreenProps<'Home'>> = () => {
-  const {data: posts, isLoading, error} = useFetchUserPosts();
+  const {
+    data,
+    isLoading,
+    error,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage,
+  } = useFetchUserPosts();
+
+  const postsData = data?.pages
+    ?.flatMap(el => el.data)
+    .filter(el => typeof el !== 'number');
 
   const {paperTheme} = useAppTheme();
 
@@ -58,19 +68,27 @@ const Home: React.FC<TabScreenProps<'Home'>> = () => {
     backgroundColor,
   }));
 
+  const handleIncreasePage = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
+
   if (isLoading) return <ActivityIndicator style={styles.container} />;
 
-  if (error) return <Text style={styles.container}>{error.message}</Text>;
+  if (error)
+    return <Text style={{flex: 1, marginTop: 50}}>{error.message}</Text>;
 
   return (
     <SafeAreaView style={[styles.container, {backgroundColor}]}>
       <Animated.FlatList
-        data={Object.values(posts || {}) as PostTypes[]}
+        data={postsData}
         renderItem={renderItem}
         keyExtractor={item => item.timeStamp.toString()}
         scrollEventThrottle={16}
         // bounces={false}
         onScroll={handleScroll}
+        onEndReached={handleIncreasePage}
         stickyHeaderIndices={[0]}
         ListEmptyComponent={<NoPostsTitle />}
         ListHeaderComponent={

@@ -1,7 +1,17 @@
-import {child, get, ref, set} from 'firebase/database';
+import {
+  child,
+  get,
+  ref,
+  set,
+  query,
+  orderByKey,
+  startAt,
+  limitToFirst,
+} from 'firebase/database';
 
 import {FIREBASE_DATABASE} from './FirebaseConfig';
 import {CreatePostTypes} from './ServiceTypes';
+import {PostTypes} from '../screens/tabScreens/home/HomeTypes';
 
 export const createPost = async ({
   userId,
@@ -16,8 +26,23 @@ export const createPost = async ({
   });
 };
 
-export const fetchUserPosts = async (userId: string) => {
-  const snapshot = await get(child(ref(FIREBASE_DATABASE), `posts/${userId}`));
+const itemFetchLimit = 4;
 
-  return snapshot.val();
+export const fetchUserPosts = async (userId: string, pageParam: number) => {
+  const dbQuery = query(
+    child(ref(FIREBASE_DATABASE), `posts/${userId}`),
+    orderByKey(),
+    startAt(pageParam.toString()),
+    limitToFirst(itemFetchLimit),
+  );
+
+  const snapshot = await get(dbQuery);
+
+  const data: PostTypes[] = Object.values(snapshot.val());
+
+  if (data.length < itemFetchLimit) {
+    return {data, nextPointer: null};
+  }
+
+  return {data, nextPointer: data?.pop()?.timeStamp};
 };

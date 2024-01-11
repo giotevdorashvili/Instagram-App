@@ -1,18 +1,21 @@
 import {View, StyleSheet} from 'react-native';
 import {Text} from 'react-native-paper';
 
-import {ActivityIndicator} from 'react-native-paper';
-import useFetchPosts from '../../../../../hooks/services/useFetchUserPosts';
+// import {ActivityIndicator} from 'react-native-paper';
+// import useFetchPosts from '../../../../../hooks/services/useFetchUserPosts';
 
 const PostsCounter = () => {
-  const {data: posts, isLoading} = useFetchPosts();
+  // const {data: posts, isLoading} = useFetchPosts();
 
-  if (isLoading) return <ActivityIndicator />;
+  // console.log('xxxxxxxxx', posts?.pages[0].data.length);
+
+  // if (isLoading) return <ActivityIndicator />;
 
   return (
     <View style={styles.counterContainer}>
       <Text style={styles.text}>
-        {posts ? Object?.keys?.(posts)?.length : 0}
+        {/* {posts ? Object?.keys?.(posts)?.length : 0} */}
+        100000
       </Text>
       <Text style={styles.text}>Posts</Text>
     </View>
