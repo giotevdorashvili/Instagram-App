@@ -10,7 +10,7 @@ import {
 } from 'firebase/database';
 
 import {FIREBASE_DATABASE} from './FirebaseConfig';
-import {CreateUserTypes} from './ServiceTypes';
+import {CreateUserTypes, UpdateUSerTypes} from './ServiceTypes';
 
 export const createUser = async ({
   userId,
@@ -29,10 +29,14 @@ export const fetchUser = async (userId: string) => {
   return snapshot.val();
 };
 
-export const updateUser = async (userUid: string, uri: string) => {
-  await update(ref(FIREBASE_DATABASE, `users/${userUid}`), {
-    profilePictureUri: uri,
-  });
+export const updateUser = async (
+  userUid: string,
+  updatedUserProfiledata: UpdateUSerTypes,
+) => {
+  await update(
+    ref(FIREBASE_DATABASE, `users/${userUid}`),
+    updatedUserProfiledata,
+  );
 };
 
 export const findUserByUsername = async (username: string) => {

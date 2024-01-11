@@ -22,3 +22,9 @@ export interface CreatePostTypes {
   postImageUri: string;
   timeStamp: number;
 }
+
+export interface UpdateUSerTypes {
+  fullName?: string;
+  profilePictureUri?: string;
+  username?: string;
+}

@@ -23,7 +23,7 @@ const useUploadProfilePic = () => {
       try {
         const uri = await getImageFromFirebaseStorage(storageImageName);
 
-        await updateUser(userId!, uri);
+        await updateUser(userId!, {profilePictureUri: uri});
 
         queryClient.invalidateQueries({queryKey: [userId]});
       } catch (error) {
