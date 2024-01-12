@@ -19,7 +19,7 @@ const useCreatePost = () => {
     },
   });
 
-  return {...mutationData, uidExists: !!userId};
+  return mutationData;
 };
 
 export default useCreatePost;

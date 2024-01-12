@@ -18,7 +18,7 @@ import {
 const NewPost: React.FC<RootScreenProps<'NewPost'>> = ({route}) => {
   const [postTitle, setPostTitle] = useState<string>('');
 
-  const {mutate, error, status, uidExists} = useCreatePost();
+  const {mutate, error, status} = useCreatePost();
 
   const userId = FIREBASE_AUTH.currentUser?.uid;
 
@@ -37,7 +37,7 @@ const NewPost: React.FC<RootScreenProps<'NewPost'>> = ({route}) => {
 
     const blobFile = await transformLocalUriToBlob(imageUri!);
 
-    if (!uidExists || !userId) return alertUidError();
+    if (!userId) return alertUidError();
 
     const storageImageName = `images-post-${userId}-${timeStamp}`;
 
