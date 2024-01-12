@@ -23,6 +23,7 @@ const Home: React.FC<TabScreenProps<'Home'>> = () => {
     data,
     error,
     isLoading,
+    isFetching,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
@@ -95,6 +96,7 @@ const Home: React.FC<TabScreenProps<'Home'>> = () => {
             <InstagramWordLogo />
           </Animated.View>
         }
+        ListFooterComponent={isFetching ? <ActivityIndicator /> : null}
       />
     </SafeAreaView>
   );
@@ -104,6 +106,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  // activityIndicator: {},
 });
 
 export default Home;
