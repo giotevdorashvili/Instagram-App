@@ -20,14 +20,8 @@ const useFetchUserPosts = () => {
 
   return useInfiniteQuery({
     queryKey: ['posts', userId],
-    queryFn: async ({pageParam}) => {
-      return await fetchUserPosts(userId!, pageParam);
-    },
-    getNextPageParam: lastPage => {
-      console.log('runssss', lastPage.nextPointer);
-
-      return lastPage.nextPointer;
-    },
+    queryFn: async ({pageParam}) => await fetchUserPosts(userId!, pageParam),
+    getNextPageParam: lastPage => lastPage.nextPointer,
     initialPageParam: 0,
   });
 };

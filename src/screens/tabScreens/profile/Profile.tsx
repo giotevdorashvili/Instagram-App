@@ -7,7 +7,7 @@ import useFetchUser from '../../../hooks/services/useFetchUser';
 import StatusBar from '../../../components/statusBar/StatusBar';
 import {TabScreenProps} from '../../../navigators/tabNavigator/TabNavigatorTypes';
 import ProfilePicture from './profilePicture/ProfilePicture';
-import ProfileCounter from './profileCounter/ProfileCounter';
+import ProfileStats from './profileStats/ProfileStats';
 import {renderProfileTabIcon} from '../../../utils/tabNavigator/utils';
 import {renderHeaderLeft} from '../../../utils/tabNavigator/utils';
 import useAppTheme from '../../../hooks/theme/useApptheme';
@@ -41,7 +41,7 @@ const Profile: React.FC<TabScreenProps<'Profile'>> = ({navigation}) => {
       <View style={styles.avatarCountersContainer}>
         <ProfilePicture imageUri={imageUri} />
 
-        <ProfileCounter />
+        <ProfileStats />
       </View>
 
       <Text style={styles.text}>{fullName}</Text>

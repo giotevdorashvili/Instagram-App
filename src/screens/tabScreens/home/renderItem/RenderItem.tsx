@@ -22,7 +22,7 @@ const RenderItem = ({item}: {item: PostTypes}) => {
     },
   } = useAppTheme();
 
-  const postAge = calculatePostAge(Date.now() - item.timeStamp);
+  const postAge = calculatePostAge(item.timeStamp);
 
   const handleImagePress = () => {
     navigation.navigate('Profile');

@@ -1,4 +1,6 @@
 import {StyleSheet} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
+import {ActivityIndicator, Text} from 'react-native-paper';
 import Animated, {
   clamp,
   withSpring,
@@ -8,8 +10,6 @@ import Animated, {
   useAnimatedStyle,
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {ActivityIndicator, Text} from 'react-native-paper';
 
 import {TabScreenProps} from '../../../navigators/tabNavigator/TabNavigatorTypes';
 import useAppTheme from '../../../hooks/theme/useApptheme';
@@ -21,11 +21,11 @@ import {renderItem} from '../../../utils/home/utils';
 const Home: React.FC<TabScreenProps<'Home'>> = () => {
   const {
     data,
-    isLoading,
     error,
+    isLoading,
     hasNextPage,
-    isFetchingNextPage,
     fetchNextPage,
+    isFetchingNextPage,
   } = useFetchUserPosts();
 
   const postsData = data?.pages
@@ -55,6 +55,12 @@ const Home: React.FC<TabScreenProps<'Home'>> = () => {
     },
   });
 
+  const handleIncreasePage = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
+
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: interpolate(scrollY.value, [0, 50], [1, 0.5], Extrapolation.CLAMP),
     transform: [
@@ -68,12 +74,6 @@ const Home: React.FC<TabScreenProps<'Home'>> = () => {
     backgroundColor,
   }));
 
-  const handleIncreasePage = () => {
-    if (hasNextPage && !isFetchingNextPage) {
-      fetchNextPage();
-    }
-  };
-
   if (isLoading) return <ActivityIndicator style={styles.container} />;
 
   if (error)
@@ -86,7 +86,6 @@ const Home: React.FC<TabScreenProps<'Home'>> = () => {
         renderItem={renderItem}
         keyExtractor={item => item.timeStamp.toString()}
         scrollEventThrottle={16}
-        // bounces={false}
         onScroll={handleScroll}
         onEndReached={handleIncreasePage}
         stickyHeaderIndices={[0]}
