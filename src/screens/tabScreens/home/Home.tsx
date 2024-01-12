@@ -17,6 +17,7 @@ import useFetchUserPosts from '../../../hooks/services/useFetchUserPosts';
 import NoPostsTitle from './noPostsTitle/NoPostsTitle';
 import InstagramWordLogo from '../../../components/logos/InstagramWordLogo';
 import {renderItem} from '../../../utils/home/utils';
+import {useMemo} from 'react';
 
 const Home: React.FC<TabScreenProps<'Home'>> = () => {
   const {
@@ -29,9 +30,11 @@ const Home: React.FC<TabScreenProps<'Home'>> = () => {
     isFetchingNextPage,
   } = useFetchUserPosts();
 
-  const postsData = data?.pages
-    ?.flatMap(el => el.data)
-    .filter(el => typeof el !== 'number');
+  const postsData = useMemo(
+    () =>
+      data?.pages?.flatMap(el => el.data).filter(el => typeof el !== 'number'),
+    [data?.pages],
+  );
 
   const {paperTheme} = useAppTheme();
 
@@ -40,9 +43,6 @@ const Home: React.FC<TabScreenProps<'Home'>> = () => {
   const scrollY = useSharedValue(0);
 
   const handleScroll = useAnimatedScrollHandler({
-    onBeginDrag: (event, ctx) => {
-      ctx.prevY = event.contentOffset.y;
-    },
     onScroll: (event, ctx) => {
       let {y} = event.contentOffset;
 
@@ -106,7 +106,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  // activityIndicator: {},
 });
 
 export default Home;
