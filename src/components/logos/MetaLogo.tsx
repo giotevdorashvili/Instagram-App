@@ -3,19 +3,14 @@ import {Text} from 'react-native-paper';
 
 import useAppTheme from '../../hooks/theme/useApptheme';
 import Logo from '../../assets/meta-logo.svg';
+import {LogoTypes} from './LogoTypes';
 
-const MetaLogo = ({
-  width = 25,
-  height = 25,
-}: {
-  width?: number;
-  height?: number;
-}) => {
+const MetaLogo = (props: LogoTypes) => {
   const {paperTheme} = useAppTheme();
 
   return (
     <View style={styles.metaLogoContainer}>
-      <Logo width={width} height={height} fill={paperTheme.colors.logoText} />
+      <Logo {...props} />
 
       <Text style={[styles.metaText, {color: paperTheme.colors.logoText}]}>
         Meta

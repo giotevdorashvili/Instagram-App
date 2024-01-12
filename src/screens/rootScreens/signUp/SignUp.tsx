@@ -7,8 +7,11 @@ import InstagramLogo from '../../../components/logos/InstagramLogo';
 import MetaLogo from '../../../components/logos/MetaLogo';
 import SignUpInputs from './inputs/SignUpInputs';
 import {RootScreenProps} from '../../../navigators/rootNavigator/RootNavigatorTypes';
+import useAppTheme from '../../../hooks/theme/useApptheme';
 
 const SignUp: React.FC<RootScreenProps<'SignUp'>> = () => {
+  const {paperTheme} = useAppTheme();
+
   return (
     <GradientBackground>
       <SafeAreaView style={styles.container}>
@@ -23,7 +26,7 @@ const SignUp: React.FC<RootScreenProps<'SignUp'>> = () => {
         </KeyboardAvoidingView>
 
         <View style={styles.createButtonMetaContainer}>
-          <MetaLogo />
+          <MetaLogo width={25} height={25} fill={paperTheme.colors.logoText} />
         </View>
       </SafeAreaView>
     </GradientBackground>

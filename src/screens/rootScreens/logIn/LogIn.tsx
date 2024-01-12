@@ -11,8 +11,11 @@ import {
   CreateAccountButton,
 } from './buttons/LogInButtons';
 import {RootScreenProps} from '../../../navigators/rootNavigator/RootNavigatorTypes';
+import useAppTheme from '../../../hooks/theme/useApptheme';
 
 const LogIn: React.FC<RootScreenProps<'LogIn'>> = () => {
+  const {paperTheme} = useAppTheme();
+
   return (
     <GradientBackground>
       <SafeAreaView style={styles.container}>
@@ -30,7 +33,7 @@ const LogIn: React.FC<RootScreenProps<'LogIn'>> = () => {
 
         <View style={styles.createButtonMetaContainer}>
           <CreateAccountButton />
-          <MetaLogo />
+          <MetaLogo width={25} height={25} fill={paperTheme.colors.logoText} />
         </View>
       </SafeAreaView>
     </GradientBackground>

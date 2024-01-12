@@ -93,7 +93,11 @@ const Home: React.FC<TabScreenProps<'Home'>> = () => {
         ListEmptyComponent={<NoPostsTitle />}
         ListHeaderComponent={
           <Animated.View style={animatedStyle}>
-            <InstagramWordLogo />
+            <InstagramWordLogo
+              width={150}
+              height={50}
+              fill={paperTheme.colors.tertiary}
+            />
           </Animated.View>
         }
         ListFooterComponent={isFetching ? <ActivityIndicator /> : null}

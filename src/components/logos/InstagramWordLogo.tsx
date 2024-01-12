@@ -1,18 +1,7 @@
-import useAppTheme from '../../hooks/theme/useApptheme';
 import Logo from '../../assets/instagram-wordmark.svg';
+import {LogoTypes} from './LogoTypes';
 
-const InstagramWordLogo = ({
-  width = 150,
-  height = 50,
-}: {
-  width?: number;
-  height?: number;
-}) => {
-  const {paperTheme} = useAppTheme();
-
-  return (
-    <Logo width={width} height={height} fill={paperTheme.colors.tertiary} />
-  );
+const InstagramWordLogo = (props: LogoTypes) => {
+  return <Logo {...props} />;
 };
-
 export default InstagramWordLogo;
