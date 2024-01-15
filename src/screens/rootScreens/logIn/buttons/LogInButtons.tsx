@@ -1,8 +1,8 @@
 import {StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 
-import useAppTheme from '../../../hooks/theme/useApptheme';
-import {useGetNavigation} from '../../../navigators/StackNavigator';
+import useAppTheme from '../../../../hooks/theme/useApptheme';
+import {useRootNavigation} from '../../../../navigators/rootNavigator/RootNavigator';
 
 export const ForgotPasswordButton = () => {
   const {paperTheme} = useAppTheme();
@@ -22,7 +22,7 @@ export const ForgotPasswordButton = () => {
 export const CreateAccountButton = () => {
   const {paperTheme} = useAppTheme();
 
-  const navigation = useGetNavigation();
+  const navigation = useRootNavigation();
 
   return (
     <Button
@@ -30,7 +30,7 @@ export const CreateAccountButton = () => {
       labelStyle={styles.buttonLabel}
       mode="outlined"
       textColor={paperTheme.colors.lightBlue}
-      onPress={() => navigation.navigate('SignUp', {})}>
+      onPress={() => navigation.navigate('SignUp')}>
       Create new account
     </Button>
   );

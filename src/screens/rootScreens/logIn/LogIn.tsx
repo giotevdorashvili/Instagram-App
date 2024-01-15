@@ -1,18 +1,21 @@
 import {StyleSheet, View, KeyboardAvoidingView, Platform} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import GradientBackground from '../../components/gradientBackground/GradientBackground';
-import {ScreenProps} from '../../navigators/StackNavigator';
-import StatusBar from '../../components/statusBar/StatusBar';
-import InstagramLogo from '../../components/logos/InstagramLogo';
-import MetaLogo from '../../components/logos/MetaLogo';
+import GradientBackground from '../../../components/gradientBackground/GradientBackground';
+import StatusBar from '../../../components/statusBar/StatusBar';
+import InstagramLogo from '../../../components/logos/InstagramLogo';
+import MetaLogo from '../../../components/logos/MetaLogo';
 import LogInInputs from './inputs/LogInInputs';
 import {
   ForgotPasswordButton,
   CreateAccountButton,
 } from './buttons/LogInButtons';
+import {RootScreenProps} from '../../../navigators/rootNavigator/RootNavigatorTypes';
+import useAppTheme from '../../../hooks/theme/useApptheme';
 
-const LogIn: React.FC<ScreenProps<'LogIn'>> = () => {
+const LogIn: React.FC<RootScreenProps<'LogIn'>> = () => {
+  const {paperTheme} = useAppTheme();
+
   return (
     <GradientBackground>
       <SafeAreaView style={styles.container}>
@@ -30,7 +33,7 @@ const LogIn: React.FC<ScreenProps<'LogIn'>> = () => {
 
         <View style={styles.createButtonMetaContainer}>
           <CreateAccountButton />
-          <MetaLogo />
+          <MetaLogo width={25} height={25} fill={paperTheme.colors.logoText} />
         </View>
       </SafeAreaView>
     </GradientBackground>

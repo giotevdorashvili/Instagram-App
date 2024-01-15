@@ -6,50 +6,47 @@ import {
   query,
   orderByChild,
   equalTo,
+  update,
 } from 'firebase/database';
 
 import {FIREBASE_DATABASE} from './FirebaseConfig';
-import {CreateUserTypes} from './ServiceTypes';
+import {CreateUserTypes, UpdateUSerTypes} from './ServiceTypes';
 
 export const createUser = async ({
   userId,
   username,
   fullName,
 }: CreateUserTypes) => {
-  try {
-    await set(ref(FIREBASE_DATABASE, `users/${userId}`), {
-      username,
-      fullName,
-    });
-  } catch (error) {
-    throw error;
-  }
+  await set(ref(FIREBASE_DATABASE, `users/${userId}`), {
+    username,
+    fullName,
+  });
 };
 
 export const fetchUser = async (userId: string) => {
-  try {
-    const snapshot = await get(
-      child(ref(FIREBASE_DATABASE), `users/${userId}`),
-    );
+  const snapshot = await get(child(ref(FIREBASE_DATABASE), `users/${userId}`));
 
-    return snapshot.val();
-  } catch (error) {
-    throw error;
-  }
+  return snapshot.val();
+};
+
+export const updateUser = async (
+  userUid: string,
+  updatedUserProfiledata: UpdateUSerTypes,
+) => {
+  await update(
+    ref(FIREBASE_DATABASE, `users/${userUid}`),
+    updatedUserProfiledata,
+  );
 };
 
 export const findUserByUsername = async (username: string) => {
-  try {
-    const snapshot = await get(
-      query(
-        ref(FIREBASE_DATABASE, 'users'),
-        orderByChild('username'),
-        equalTo(username),
-      ),
-    );
+  const snapshot = await get(
+    query(
+      ref(FIREBASE_DATABASE, 'users'),
+      orderByChild('username'),
+      equalTo(username),
+    ),
+  );
 
-    return snapshot.exists();
-  } catch (error) {
-    console.error(error);
-  }
+  return snapshot.exists();
 };

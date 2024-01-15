@@ -1,4 +1,5 @@
-import {StyleSheet} from 'react-native';
+import {Alert, StyleSheet} from 'react-native';
+import {signOutUser} from '../../services/authentication';
 
 export const getSharedInputprops = (backgroundColor: string) => {
   return {
@@ -19,3 +20,23 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
   },
 });
+
+export const alertUidError = () => {
+  Alert.alert('', 'Something went wrong, try later.', [
+    {
+      text: 'Ok',
+      onPress: signOutUser,
+      style: 'cancel',
+    },
+  ]);
+};
+
+export const alert = (messsage: string) => {
+  Alert.alert('', messsage, [
+    {
+      text: 'Ok',
+      onPress: () => console.log(''),
+      style: 'cancel',
+    },
+  ]);
+};

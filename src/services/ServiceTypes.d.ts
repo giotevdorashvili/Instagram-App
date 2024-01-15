@@ -15,3 +15,16 @@ export interface CreateUserTypes {
   username: string;
   fullName: string;
 }
+
+export interface CreatePostTypes {
+  userId: string;
+  postTitle: string;
+  postImageUri: string;
+  timeStamp: number;
+}
+
+export interface UpdateUSerTypes {
+  fullName?: string;
+  profilePictureUri?: string;
+  username?: string;
+}

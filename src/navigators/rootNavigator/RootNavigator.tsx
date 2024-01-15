@@ -1,30 +1,26 @@
 import React, {useEffect, useState} from 'react';
 import {
   NativeStackNavigationProp,
-  NativeStackScreenProps,
   createNativeStackNavigator,
 } from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 import {User, onAuthStateChanged} from 'firebase/auth';
-
-import LogIn from '../screens/logIn/LogIn';
-import SignUp from '../screens/signUp/SignUp';
-import Profile from '../screens/profile/Profile';
-import {FIREBASE_AUTH} from '../services/FirebaseConfig';
 import {ActivityIndicator} from 'react-native-paper';
 
-export type ScreenProps<T extends keyof RootStackParamList> =
-  NativeStackScreenProps<RootStackParamList, T>;
+import LogIn from '../../screens/rootScreens/logIn/LogIn';
+import SignUp from '../../screens/rootScreens/signUp/SignUp';
+import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
+import TabNavigator from '../tabNavigator/TabNavigator';
+import {RootStackParamList} from './RootNavigatorTypes';
+import NewPost from '../../screens/rootScreens/newPost/NewPost';
 
-export type RootStackParamList = {
-  LogIn: undefined;
-  SignUp: {};
-  Profile: {userId: string};
+export const useRootNavigation = () => {
+  return useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const StackNavigator = () => {
+const RootNavigator = () => {
   const [userLoggedIn, setUserLoggedIn] = useState<User | null>();
   const [loading, setLoading] = useState(true);
 
@@ -35,7 +31,7 @@ const StackNavigator = () => {
     });
   }, []);
 
-  if (loading) return <ActivityIndicator />;
+  if (loading) return <ActivityIndicator style={{flex: 1}} />;
 
   return (
     <Stack.Navigator>
@@ -57,23 +53,28 @@ const StackNavigator = () => {
           />
         </>
       ) : (
-        <Stack.Screen
-          name="Profile"
-          component={Profile}
-          options={{
-            title: '',
-            headerTransparent: true,
-            headerBackTitleVisible: false,
-          }}
-          initialParams={{userId: userLoggedIn.uid}}
-        />
+        <>
+          <Stack.Screen
+            name="TabNavigator"
+            component={TabNavigator}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
+            name="NewPost"
+            component={NewPost}
+            options={{
+              title: '',
+              headerTransparent: true,
+              headerBackTitle: 'New Post',
+              headerBackTitleStyle: {
+                fontSize: 20,
+              },
+            }}
+          />
+        </>
       )}
     </Stack.Navigator>
   );
 };
 
-export default StackNavigator;
-
-export const useGetNavigation = () => {
-  return useNavigation<NativeStackNavigationProp<RootStackParamList>>();
-};
+export default RootNavigator;
