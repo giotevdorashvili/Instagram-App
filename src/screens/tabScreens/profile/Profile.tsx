@@ -5,7 +5,7 @@ import {ActivityIndicator, Text} from 'react-native-paper';
 
 import useFetchUser from '../../../hooks/services/useFetchUser';
 import StatusBar from '../../../components/statusBar/StatusBar';
-import {TabScreenProps} from '../../../navigators/tabNavigator/TabNavigatorTypes';
+import {TabScreenProps} from '../../../navigators/tabStack/TabStackTypes';
 import ProfilePicture from './profilePicture/ProfilePicture';
 import ProfileStats from './profileStats/ProfileStats';
 import {renderProfileTabIcon} from '../../../utils/tabNavigator/utils';
@@ -24,6 +24,8 @@ const Profile: React.FC<TabScreenProps<'Profile'>> = ({navigation}) => {
   const backgroundColor = paperTheme.colors.main;
 
   useEffect(() => {
+    if (!imageUri) return;
+
     navigation.setOptions({
       tabBarIcon: () => renderProfileTabIcon(imageUri),
       headerLeft: () => renderHeaderLeft(username),
@@ -35,7 +37,9 @@ const Profile: React.FC<TabScreenProps<'Profile'>> = ({navigation}) => {
   if (error) return <Text style={styles.container}>{error.message}</Text>;
 
   return (
-    <SafeAreaView style={[styles.container, {backgroundColor}]}>
+    <SafeAreaView
+      edges={['bottom']}
+      style={[styles.container, {backgroundColor}]}>
       <StatusBar />
 
       <View style={styles.avatarCountersContainer}>
@@ -53,7 +57,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingHorizontal: 20,
-    paddingTop: 50,
   },
   avatarCountersContainer: {
     flexDirection: 'row',

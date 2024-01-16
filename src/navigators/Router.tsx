@@ -1,6 +1,6 @@
 import {NavigationContainer} from '@react-navigation/native';
 
-import RootNavigator from './rootNavigator/RootNavigator';
+import RootStack from './rootStack/RootStack';
 import useApptheme from '../hooks/theme/useApptheme';
 
 const Router = () => {
@@ -8,7 +8,7 @@ const Router = () => {
 
   return (
     <NavigationContainer theme={navigationTheme}>
-      <RootNavigator />
+      <RootStack />
     </NavigationContainer>
   );
 };

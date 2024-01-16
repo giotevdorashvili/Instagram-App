@@ -3,20 +3,20 @@ import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 import {useNavigation} from '@react-navigation/native';
 
 import Home from '../../screens/tabScreens/home/Home';
-import Search from '../../screens/tabScreens/search/Search';
 import Profile from '../../screens/tabScreens/profile/Profile';
-import {RootScreenProps} from '../rootNavigator/RootNavigatorTypes';
-import {TabStackParamList} from './TabNavigatorTypes';
+import {RootScreenProps} from '../rootStack/RootStackTypes';
+import {TabParamList} from './TabStackTypes';
 import useAppTheme from '../../hooks/theme/useApptheme';
 import {renderHeaderRight, renderTabIcon} from '../../utils/tabNavigator/utils';
+import SearchStack from '../searchStack/SearchStack';
 
 export const useTabNavigation = () => {
-  return useNavigation<NativeStackNavigationProp<TabStackParamList>>();
+  return useNavigation<NativeStackNavigationProp<TabParamList>>();
 };
 
-const Tab = createBottomTabNavigator<TabStackParamList>();
+const Tab = createBottomTabNavigator<TabParamList>();
 
-const TabNavigator: React.FC<RootScreenProps<'TabNavigator'>> = () => {
+const TabNavigator: React.FC<RootScreenProps<'TabStack'>> = () => {
   const {paperTheme} = useAppTheme();
 
   return (
@@ -24,6 +24,9 @@ const TabNavigator: React.FC<RootScreenProps<'TabNavigator'>> = () => {
       initialRouteName="Profile"
       screenOptions={{
         headerTitle: '',
+        headerStyle: {
+          backgroundColor: paperTheme.colors.main,
+        },
         title: '',
         tabBarStyle: {
           backgroundColor: paperTheme.colors.main,
@@ -33,15 +36,15 @@ const TabNavigator: React.FC<RootScreenProps<'TabNavigator'>> = () => {
         name="Home"
         component={Home}
         options={{
-          headerShown: false,
-          headerTransparent: true,
           tabBarIcon: ({color}) => renderTabIcon('home-outline', color),
+          headerTransparent: true,
         }}
       />
       <Tab.Screen
-        name="Search"
-        component={Search}
+        name="SearchStack"
+        component={SearchStack}
         options={{
+          headerShown: false,
           tabBarIcon: ({color}) => renderTabIcon('magnify', color),
         }}
       />
@@ -49,7 +52,6 @@ const TabNavigator: React.FC<RootScreenProps<'TabNavigator'>> = () => {
         name="Profile"
         component={Profile}
         options={{
-          headerTransparent: true,
           headerRight: () => renderHeaderRight(),
           tabBarIcon: ({color}) =>
             renderTabIcon('account-circle-outline', color),

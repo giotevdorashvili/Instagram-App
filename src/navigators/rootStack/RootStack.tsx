@@ -10,8 +10,8 @@ import {ActivityIndicator} from 'react-native-paper';
 import LogIn from '../../screens/rootScreens/logIn/LogIn';
 import SignUp from '../../screens/rootScreens/signUp/SignUp';
 import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
-import TabNavigator from '../tabNavigator/TabNavigator';
-import {RootStackParamList} from './RootNavigatorTypes';
+import TabStack from '../tabStack/TabStack';
+import {RootStackParamList} from './RootStackTypes';
 import NewPost from '../../screens/rootScreens/newPost/NewPost';
 
 export const useRootNavigation = () => {
@@ -55,8 +55,8 @@ const RootNavigator = () => {
       ) : (
         <>
           <Stack.Screen
-            name="TabNavigator"
-            component={TabNavigator}
+            name="TabStack"
+            component={TabStack}
             options={{headerShown: false}}
           />
           <Stack.Screen

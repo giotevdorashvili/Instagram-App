@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Image, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {RootScreenProps} from '../../../navigators/rootNavigator/RootNavigatorTypes';
+import {RootScreenProps} from '../../../navigators/rootStack/RootStackTypes';
 import StatusBar from '../../../components/statusBar/StatusBar';
 import {Button, Text, TextInput} from 'react-native-paper';
 import useAppTheme from '../../../hooks/theme/useApptheme';

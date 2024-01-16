@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {Button} from 'react-native-paper';
 
 import useAppTheme from '../../../../hooks/theme/useApptheme';
-import {useRootNavigation} from '../../../../navigators/rootNavigator/RootNavigator';
+import {useRootNavigation} from '../../../../navigators/rootStack/RootStack';
 
 export const ForgotPasswordButton = () => {
   const {paperTheme} = useAppTheme();

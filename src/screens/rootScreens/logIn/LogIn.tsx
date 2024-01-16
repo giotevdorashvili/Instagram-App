@@ -6,12 +6,12 @@ import StatusBar from '../../../components/statusBar/StatusBar';
 import InstagramLogo from '../../../components/logos/InstagramLogo';
 import MetaLogo from '../../../components/logos/MetaLogo';
 import LogInInputs from './inputs/LogInInputs';
+import {RootScreenProps} from '../../../navigators/rootStack/RootStackTypes';
+import useAppTheme from '../../../hooks/theme/useApptheme';
 import {
   ForgotPasswordButton,
   CreateAccountButton,
 } from './buttons/LogInButtons';
-import {RootScreenProps} from '../../../navigators/rootNavigator/RootNavigatorTypes';
-import useAppTheme from '../../../hooks/theme/useApptheme';
 
 const LogIn: React.FC<RootScreenProps<'LogIn'>> = () => {
   const {paperTheme} = useAppTheme();
