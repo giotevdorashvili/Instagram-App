@@ -1,7 +1,7 @@
 import {View, StyleSheet} from 'react-native';
 import {IconButton} from 'react-native-paper';
 
-import {useRootNavigation} from '../../../../navigators/rootNavigator/RootNavigator';
+import {useRootNavigation} from '../../../../navigators/rootStack/RootStack';
 import {signOutUser} from '../../../../services/authentication';
 import {getLocalImageUriFromDevice} from '../../../../utils/services/utils';
 

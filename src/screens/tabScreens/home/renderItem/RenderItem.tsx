@@ -4,7 +4,7 @@ import {IconButton, TextInput, Text} from 'react-native-paper';
 import useFetchUser from '../../../../hooks/services/useFetchUser';
 import useAppTheme from '../../../../hooks/theme/useApptheme';
 import {calculatePostAge} from '../../../../utils/home/utils';
-import {useTabNavigation} from '../../../../navigators/tabNavigator/TabNavigator';
+import {useTabNavigation} from '../../../../navigators/tabStack/TabStack';
 import {PostTypes} from '../HomeTypes';
 import styles from './RenderItemStyles';
 

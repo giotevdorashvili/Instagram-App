@@ -5,12 +5,10 @@ import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
 const useFetchUser = () => {
   const userId = FIREBASE_AUTH.currentUser?.uid;
 
-  const queryData = useQuery({
+  return useQuery({
     queryKey: [userId],
     queryFn: async () => await fetchUser(userId!),
   });
-
-  return queryData;
 };
 
 export default useFetchUser;

@@ -11,13 +11,14 @@ import Animated, {
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 
-import {TabScreenProps} from '../../../navigators/tabNavigator/TabNavigatorTypes';
+import {TabScreenProps} from '../../../navigators/tabStack/TabStackTypes';
 import useAppTheme from '../../../hooks/theme/useApptheme';
 import useFetchUserPosts from '../../../hooks/services/useFetchUserPosts';
 import NoPostsTitle from './noPostsTitle/NoPostsTitle';
 import InstagramWordLogo from '../../../components/logos/InstagramWordLogo';
 import {renderItem} from '../../../utils/home/utils';
 import {useMemo} from 'react';
+import StatusBar from '../../../components/statusBar/StatusBar';
 
 const Home: React.FC<TabScreenProps<'Home'>> = () => {
   const {
@@ -82,6 +83,8 @@ const Home: React.FC<TabScreenProps<'Home'>> = () => {
 
   return (
     <SafeAreaView style={[styles.container, {backgroundColor}]}>
+      <StatusBar />
+
       <Animated.FlatList
         data={postsData}
         renderItem={renderItem}
