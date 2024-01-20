@@ -1,5 +1,7 @@
 import {View, Pressable, Image} from 'react-native';
-import {IconButton, TextInput, Text} from 'react-native-paper';
+import {IconButton, TextInput, Text, Icon} from 'react-native-paper';
+import {TapGestureHandler} from 'react-native-gesture-handler';
+import Animated from 'react-native-reanimated';
 
 import useFetchUser from '../../../../hooks/services/useFetchUser';
 import useAppTheme from '../../../../hooks/theme/useApptheme';
@@ -7,8 +9,17 @@ import {calculatePostAge} from '../../../../utils/home/utils';
 import {useTabNavigation} from '../../../../navigators/tabStack/TabStack';
 import {PostTypes} from '../HomeTypes';
 import styles from './RenderItemStyles';
+import useAnimatePostLikes from '../../../../hooks/posts/useAnimatePostLikes';
 
 const RenderItem = ({item}: {item: PostTypes}) => {
+  const {
+    postLiked,
+    handleLikePostFromImage,
+    handleLikePostFromIcon,
+    likeImageHeartStyle,
+    likeIconStyle,
+  } = useAnimatePostLikes();
+
   const {data} = useFetchUser();
 
   const profilePictureUri = data?.profilePictureUri;
@@ -18,13 +29,13 @@ const RenderItem = ({item}: {item: PostTypes}) => {
 
   const {
     paperTheme: {
-      colors: {main},
+      colors: {main, likedPost},
     },
   } = useAppTheme();
 
   const postAge = calculatePostAge(item.timeStamp);
 
-  const handleImagePress = () => {
+  const handleProfilePicPress = () => {
     navigation.navigate('Profile');
   };
 
@@ -37,21 +48,31 @@ const RenderItem = ({item}: {item: PostTypes}) => {
   return (
     <View style={styles.container}>
       <View style={styles.pairContainer}>
-        <Pressable onPress={handleImagePress}>
+        <Pressable onPress={handleProfilePicPress}>
           <Image style={styles.avatar} source={source} />
         </Pressable>
         <Text style={styles.username}>{username}</Text>
       </View>
 
-      <Image style={styles.postImage} source={{uri: item.postImageUri}} />
+      <TapGestureHandler numberOfTaps={2} onActivated={handleLikePostFromImage}>
+        <View>
+          <Image style={styles.postImage} source={{uri: item.postImageUri}} />
+          <Animated.View style={likeImageHeartStyle}>
+            <Icon source="cards-heart" size={100} color="white" />
+          </Animated.View>
+        </View>
+      </TapGestureHandler>
 
       <View style={styles.iconsContainer}>
-        <IconButton
-          icon="cards-heart-outline"
-          size={30}
-          onPress={() => console.log('Pressed')}
-          style={styles.iconButton}
-        />
+        <Animated.View style={likeIconStyle}>
+          <IconButton
+            icon={postLiked ? 'cards-heart' : 'cards-heart-outline'}
+            size={30}
+            iconColor={postLiked ? likedPost : undefined}
+            onPress={handleLikePostFromIcon}
+            style={styles.iconButton}
+          />
+        </Animated.View>
         <IconButton
           icon="chat-outline"
           size={30}
@@ -66,7 +87,7 @@ const RenderItem = ({item}: {item: PostTypes}) => {
       </View>
 
       <View style={styles.pairContainer}>
-        <Pressable onPress={handleImagePress}>
+        <Pressable onPress={handleProfilePicPress}>
           <Image style={styles.commentAvatar} source={source} />
         </Pressable>
 

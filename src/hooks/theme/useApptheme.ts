@@ -17,6 +17,7 @@ export const lightTheme = {
     inputBackgroud: 'white',
     elementBackround: '#e1e6e8',
     error: '#fa0202',
+    likedPost: '#fc3a28',
   },
 };
 
@@ -34,6 +35,7 @@ export const darkTheme = {
     inputBackgroud: '#1f2324',
     elementBackround: '#222526',
     error: '#f5515b',
+    likedPost: '#fc3a28',
   },
 };
 
