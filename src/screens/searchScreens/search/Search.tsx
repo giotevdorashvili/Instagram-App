@@ -2,7 +2,7 @@ import {useState} from 'react';
 import {Platform, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
-import {SearchStackScreenProps} from '../../../navigators/searchStack/SearchStackTypes';
+import {SearchStackScreenProps} from '../../../navigators/searchStackNavigator/SearchStackTypes';
 import useAppTheme from '../../../hooks/theme/useApptheme';
 import SearchHeader from './searchHeader/SearchHeader';
 import StatusBar from '../../../components/statusBar/StatusBar';

@@ -5,7 +5,7 @@ import {ActivityIndicator, Text} from 'react-native-paper';
 
 import useFetchUser from '../../../hooks/services/useFetchUser';
 import StatusBar from '../../../components/statusBar/StatusBar';
-import {TabScreenProps} from '../../../navigators/tabStack/TabStackTypes';
+import {TabScreenProps} from '../../../navigators/tabNavigator/TabNavigatorTypes';
 import ProfilePicture from './profilePicture/ProfilePicture';
 import ProfileStats from './profileStats/ProfileStats';
 import {renderProfileTabIcon} from '../../../utils/tabNavigator/utils';

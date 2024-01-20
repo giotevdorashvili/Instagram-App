@@ -10,7 +10,7 @@ import {ActivityIndicator} from 'react-native-paper';
 import LogIn from '../../screens/rootScreens/logIn/LogIn';
 import SignUp from '../../screens/rootScreens/signUp/SignUp';
 import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
-import TabStack from '../tabStack/TabStack';
+import TabNavigator from '../tabNavigator/TabNavigator';
 import {RootStackParamList} from './RootStackTypes';
 import NewPost from '../../screens/rootScreens/newPost/NewPost';
 
@@ -20,7 +20,7 @@ export const useRootNavigation = () => {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-const RootNavigator = () => {
+const RootStackNavigator = () => {
   const [userLoggedIn, setUserLoggedIn] = useState<User | null>();
   const [loading, setLoading] = useState(true);
 
@@ -55,8 +55,8 @@ const RootNavigator = () => {
       ) : (
         <>
           <Stack.Screen
-            name="TabStack"
-            component={TabStack}
+            name="TabNavigator"
+            component={TabNavigator}
             options={{headerShown: false}}
           />
           <Stack.Screen
@@ -77,4 +77,4 @@ const RootNavigator = () => {
   );
 };
 
-export default RootNavigator;
+export default RootStackNavigator;

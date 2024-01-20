@@ -6,7 +6,7 @@ import Animated from 'react-native-reanimated';
 import useFetchUser from '../../../../hooks/services/useFetchUser';
 import useAppTheme from '../../../../hooks/theme/useApptheme';
 import {calculatePostAge} from '../../../../utils/home/utils';
-import {useTabNavigation} from '../../../../navigators/tabStack/TabStack';
+import {useTabNavigation} from '../../../../navigators/tabNavigator/TabNavigator';
 import {PostTypes} from '../HomeTypes';
 import styles from './RenderItemStyles';
 import useAnimatePostLikes from '../../../../hooks/posts/useAnimatePostLikes';

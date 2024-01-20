@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import {SearchStackParamList} from './SearchStackTypes';
 import SearchGrid from '../../screens/searchScreens/searchGrid/SearchGrid';
 import Search from '../../screens/searchScreens/search/Search';
-import {TabScreenProps} from '../tabStack/TabStackTypes';
+import {TabScreenProps} from '../tabNavigator/TabNavigatorTypes';
 import {renderSearchGridHeader} from '../../utils/search/utils';
 
 export const useTabStackNavigation = () => {
@@ -16,7 +16,9 @@ export const useTabStackNavigation = () => {
 
 const SearchStack = createNativeStackNavigator<SearchStackParamList>();
 
-const SearchStackNavigator: React.FC<TabScreenProps<'SearchStack'>> = () => {
+const SearchStackNavigator: React.FC<
+  TabScreenProps<'SearchStackNavigator'>
+> = () => {
   return (
     <SearchStack.Navigator>
       <SearchStack.Screen

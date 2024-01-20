@@ -1,6 +1,6 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {createPost} from '../../services/crudPosts';
-import {useRootNavigation} from '../../navigators/rootStack/RootStack';
+import {useRootNavigation} from '../../navigators/rootStackNavigator/RootStackNavigator';
 import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
 
 const useCreatePost = () => {

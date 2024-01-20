@@ -9,7 +9,7 @@ import {Icon} from 'react-native-paper';
 
 import {FIREBASE_AUTH} from '../../../../services/FirebaseConfig';
 import {alertUidError} from '../../../../utils/generic/utils';
-import {ProfilePictureProps} from '../../../../navigators/tabStack/TabStackTypes';
+import {ProfilePictureProps} from '../../../../navigators/tabNavigator/TabNavigatorTypes';
 import useUploadProfilePic from '../../../../hooks/services/useUploadProfilePic';
 import {
   getLocalImageUriFromDevice,

@@ -1,7 +1,7 @@
 import {StyleSheet, View} from 'react-native';
 import {IconButton, Searchbar} from 'react-native-paper';
 import useAppTheme from '../../../../hooks/theme/useApptheme';
-import {useTabNavigation} from '../../../../navigators/tabStack/TabStack';
+import {useTabNavigation} from '../../../../navigators/tabNavigator/TabNavigator';
 import {SearchHeaderProps} from './SearchHeaderTypes';
 
 const SearchHeader = ({searchQuery, setSearchQuery}: SearchHeaderProps) => {

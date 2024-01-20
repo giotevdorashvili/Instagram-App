@@ -1,5 +1,5 @@
 import {BottomTabScreenProps} from '@react-navigation/bottom-tabs';
-import {SearchStackParamList} from '../searchStack/SearchStackTypes';
+import {SearchStackParamList} from '../searchStackNavigator/SearchStackTypes';
 
 export type TabScreenProps<T extends keyof TabParamList> = BottomTabScreenProps<
   TabParamList,
@@ -8,7 +8,7 @@ export type TabScreenProps<T extends keyof TabParamList> = BottomTabScreenProps<
 
 export type TabParamList = {
   Home: undefined;
-  SearchStack: {screen: keyof SearchStackParamList};
+  SearchStackNavigator: {screen: keyof SearchStackParamList};
   Profile: undefined;
 };
 

@@ -2,7 +2,7 @@ import {StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 
-import RootStack from './rootStack/RootStack';
+import RootStackNavigator from './rootStackNavigator/RootStackNavigator';
 import useApptheme from '../hooks/theme/useApptheme';
 
 const Router = () => {
@@ -11,7 +11,7 @@ const Router = () => {
   return (
     <GestureHandlerRootView style={styles.container}>
       <NavigationContainer theme={navigationTheme}>
-        <RootStack />
+        <RootStackNavigator />
       </NavigationContainer>
     </GestureHandlerRootView>
   );

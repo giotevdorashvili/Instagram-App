@@ -11,7 +11,7 @@ import Animated, {
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 
-import {TabScreenProps} from '../../../navigators/tabStack/TabStackTypes';
+import {TabScreenProps} from '../../../navigators/tabNavigator/TabNavigatorTypes';
 import useAppTheme from '../../../hooks/theme/useApptheme';
 import useFetchUserPosts from '../../../hooks/services/useFetchUserPosts';
 import NoPostsTitle from './noPostsTitle/NoPostsTitle';
