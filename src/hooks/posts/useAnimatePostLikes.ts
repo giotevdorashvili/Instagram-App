@@ -1,34 +1,61 @@
-import {useState} from 'react';
 import {useAnimatedStyle} from 'react-native-reanimated';
 
 import useAnimateLikeIcon from './useAnimateLikeIcon';
 import useAnimateHeartIcon from './useAnimateHeartIcon';
+import useFetchUser from '../services/useFetchUser';
+import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
+import useLikePosts from '../services/useLikePosts';
+import {PostTypes} from '../../services/ServiceTypes';
 
 const useAnimatePostLikes = () => {
-  const [postLikedFromImage, setPostlikedFromImage] = useState(false);
-  const [postLikedFromIcon, setPostLikedFromIcon] = useState(false);
-
   const {likeImageIconScale, animateLikeIcon} = useAnimateLikeIcon();
   const {likeImageOpacity, likeImageScale, animateHeartIcon} =
     useAnimateHeartIcon();
 
-  const likePostFromImage = () => {
-    setPostlikedFromImage(true);
-    setPostLikedFromIcon(true);
+  const {data} = useFetchUser();
 
-    animateLikeIcon();
-  };
+  const {isPending, variables, mutate} = useLikePosts();
 
-  const handleLikePostFromImage = () => {
-    animateHeartIcon(likePostFromImage);
-  };
+  const userId = FIREBASE_AUTH.currentUser?.uid;
 
-  const handleLikePostFromIcon = () => {
-    if (!postLikedFromImage) setPostlikedFromImage(true);
-
+  const handleLikePostFromImage = async (
+    timeStamp: number,
+    isPostLiked: boolean,
+  ) => {
+    animateHeartIcon();
     animateLikeIcon();
 
-    setPostLikedFromIcon(prev => !prev);
+    if (isPostLiked) return;
+
+    mutate({
+      liked: true,
+      postUserUid: userId!,
+      timeStamp,
+      updatedPostLikesData: data,
+    });
+  };
+
+  const handleLikePostFromIcon = (item: PostTypes, isPostLiked: boolean) => {
+    animateLikeIcon();
+
+    let updatedData = null;
+
+    if (isPostLiked) {
+      const filtered = Object.entries(item.likes || {}).filter(
+        ([key]) => key !== userId,
+      );
+
+      updatedData = Object.fromEntries(filtered).likes || {};
+    } else {
+      updatedData = item.likes ? {...item.likes, data} : data;
+    }
+
+    mutate({
+      liked: !isPostLiked,
+      postUserUid: userId!,
+      timeStamp: item.timeStamp,
+      updatedPostLikesData: updatedData,
+    });
   };
 
   const likeImageHeartStyle = useAnimatedStyle(() => {
@@ -50,10 +77,9 @@ const useAnimatePostLikes = () => {
     };
   });
 
-  const postLiked = postLikedFromImage && postLikedFromIcon;
-
   return {
-    postLiked,
+    isPending,
+    optimisticallyLiked: variables?.liked,
     handleLikePostFromImage,
     handleLikePostFromIcon,
     likeImageHeartStyle,

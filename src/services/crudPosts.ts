@@ -7,11 +7,12 @@ import {
   orderByKey,
   startAt,
   limitToFirst,
+  update,
 } from 'firebase/database';
 
 import {FIREBASE_DATABASE} from './FirebaseConfig';
-import {CreatePostTypes} from './ServiceTypes';
-import {PostTypes} from '../screens/tabScreens/home/HomeTypes';
+import {CreatePostTypes, UpdatePostLikesProps} from './ServiceTypes';
+import {PostTypes} from './ServiceTypes';
 
 export const createPost = async ({
   userId,
@@ -45,4 +46,14 @@ export const fetchUserPosts = async (userId: string, pageParam: number) => {
   }
 
   return {data, nextPointer: data?.pop()?.timeStamp};
+};
+
+export const updatePostlikes = async ({
+  postUserUid,
+  timeStamp,
+  updatedPostLikesData,
+}: UpdatePostLikesProps) => {
+  await update(ref(FIREBASE_DATABASE, `posts/${postUserUid}/${timeStamp}`), {
+    likes: {[postUserUid]: updatedPostLikesData},
+  });
 };

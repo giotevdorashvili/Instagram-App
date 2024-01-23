@@ -3,24 +3,32 @@ import {IconButton, TextInput, Text, Icon} from 'react-native-paper';
 import {TapGestureHandler} from 'react-native-gesture-handler';
 import Animated from 'react-native-reanimated';
 
+import styles from './RenderItemStyles';
 import useFetchUser from '../../../../hooks/services/useFetchUser';
 import useAppTheme from '../../../../hooks/theme/useApptheme';
 import {calculatePostAge} from '../../../../utils/home/utils';
 import {useTabNavigation} from '../../../../navigators/tabNavigator/TabNavigator';
-import {PostTypes} from '../HomeTypes';
-import styles from './RenderItemStyles';
 import useAnimatePostLikes from '../../../../hooks/posts/useAnimatePostLikes';
+import {FIREBASE_AUTH} from '../../../../services/FirebaseConfig';
+import {PostTypes} from '../../../../services/ServiceTypes';
 
 const RenderItem = ({item}: {item: PostTypes}) => {
   const {
-    postLiked,
-    handleLikePostFromImage,
-    handleLikePostFromIcon,
-    likeImageHeartStyle,
+    isPending,
+    optimisticallyLiked,
     likeIconStyle,
+    likeImageHeartStyle,
+    handleLikePostFromIcon,
+    handleLikePostFromImage,
   } = useAnimatePostLikes();
 
   const {data} = useFetchUser();
+
+  const userId = FIREBASE_AUTH.currentUser?.uid;
+
+  const isPostLiked =
+    (isPending && optimisticallyLiked) ||
+    Object.keys(item.likes || {}).some(id => id === userId);
 
   const profilePictureUri = data?.profilePictureUri;
   const username = data?.username;
@@ -29,7 +37,7 @@ const RenderItem = ({item}: {item: PostTypes}) => {
 
   const {
     paperTheme: {
-      colors: {main, likedPost},
+      colors: {main, likedPostColor},
     },
   } = useAppTheme();
 
@@ -54,7 +62,11 @@ const RenderItem = ({item}: {item: PostTypes}) => {
         <Text style={styles.username}>{username}</Text>
       </View>
 
-      <TapGestureHandler numberOfTaps={2} onActivated={handleLikePostFromImage}>
+      <TapGestureHandler
+        numberOfTaps={2}
+        onActivated={() =>
+          handleLikePostFromImage(item.timeStamp, isPostLiked)
+        }>
         <View>
           <Image style={styles.postImage} source={{uri: item.postImageUri}} />
           <Animated.View style={likeImageHeartStyle}>
@@ -66,11 +78,11 @@ const RenderItem = ({item}: {item: PostTypes}) => {
       <View style={styles.iconsContainer}>
         <Animated.View style={likeIconStyle}>
           <IconButton
-            icon={postLiked ? 'cards-heart' : 'cards-heart-outline'}
             size={30}
-            iconColor={postLiked ? likedPost : undefined}
-            onPress={handleLikePostFromIcon}
             style={styles.iconButton}
+            icon={isPostLiked ? 'cards-heart' : 'cards-heart-outline'}
+            iconColor={isPostLiked ? likedPostColor : undefined}
+            onPress={() => handleLikePostFromIcon(item, isPostLiked)}
           />
         </Animated.View>
         <IconButton

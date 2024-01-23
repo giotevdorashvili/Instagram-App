@@ -13,7 +13,7 @@ const useCreatePost = () => {
   return useMutation({
     mutationFn: createPost,
     onSuccess: async () => {
-      navigation.navigate('TabStack', {screen: 'Home'});
+      navigation.navigate('TabNavigator', {screen: 'Home'});
 
       queryClient.invalidateQueries({queryKey: ['posts', userId]});
     },

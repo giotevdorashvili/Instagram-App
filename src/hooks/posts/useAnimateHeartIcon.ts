@@ -4,9 +4,7 @@ const useAnimateHeartIcon = () => {
   const likeImageOpacity = useSharedValue(0);
   const likeImageScale = useSharedValue(1);
 
-  const animateHeartIcon = (likePostFromImage: () => void) => {
-    likePostFromImage();
-
+  const animateHeartIcon = () => {
     likeImageOpacity.value = withTiming(
       1,
       {

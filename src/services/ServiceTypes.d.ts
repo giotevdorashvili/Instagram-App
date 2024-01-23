@@ -25,6 +25,33 @@ export interface CreatePostTypes {
 
 export interface UpdateUSerTypes {
   fullName?: string;
-  profilePictureUri?: string;
+  profilePictureUri?: string | null;
   username?: string;
+}
+
+export interface updatedPostLikesDataTypes {
+  likes: {
+    userId: UpdateUSerTypes;
+  };
+}
+
+interface CommonPostProperties {
+  postImageUri?: string;
+  postTitle?: string;
+  timeStamp: number;
+}
+
+export interface Likes {
+  [id]: CommonPostProperties;
+}
+
+export interface PostTypes extends CommonPostProperties {
+  likes?: Likes;
+}
+
+export interface UpdatePostLikesProps {
+  liked?: boolean;
+  postUserUid: string;
+  timeStamp: number;
+  updatedPostLikesData: PostTypes;
 }
