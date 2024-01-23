@@ -7,8 +7,6 @@ import {
 } from 'react-native';
 import {Icon} from 'react-native-paper';
 
-import {FIREBASE_AUTH} from '../../../../services/FirebaseConfig';
-import {alertUidError} from '../../../../utils/generic/utils';
 import {ProfilePictureProps} from '../../../../navigators/tabNavigator/TabNavigatorTypes';
 import useUploadProfilePic from '../../../../hooks/services/useUploadProfilePic';
 import {
@@ -19,11 +17,7 @@ import {
 const ProfilePicture: React.FC<ProfilePictureProps> = ({imageUri}) => {
   const {mutate} = useUploadProfilePic();
 
-  const userId = FIREBASE_AUTH.currentUser?.uid;
-
   const handleUploadImage = async () => {
-    if (!userId) return alertUidError();
-
     const uri = await getLocalImageUriFromDevice();
 
     if (!uri) return;

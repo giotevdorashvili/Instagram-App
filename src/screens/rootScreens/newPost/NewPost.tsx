@@ -8,7 +8,6 @@ import {Button, Text, TextInput} from 'react-native-paper';
 import useAppTheme from '../../../hooks/theme/useApptheme';
 import useCreatePost from '../../../hooks/services/useCreatePost';
 import {FIREBASE_AUTH} from '../../../services/FirebaseConfig';
-import {alertUidError} from '../../../utils/generic/utils';
 import {
   getImageFromFirebaseStorage,
   transformLocalUriToBlob,
@@ -36,8 +35,6 @@ const NewPost: React.FC<RootScreenProps<'NewPost'>> = ({route}) => {
     const timeStamp = Date.now();
 
     const blobFile = await transformLocalUriToBlob(imageUri!);
-
-    if (!userId) return alertUidError();
 
     const storageImageName = `images-post-${userId}-${timeStamp}`;
 

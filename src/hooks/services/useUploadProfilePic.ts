@@ -15,7 +15,7 @@ const useUploadProfilePic = () => {
 
   const storageImageName = `images-avatar-${userId}`;
 
-  const mutationData = useMutation({
+  return useMutation({
     mutationFn: (BlobFile: Blob) =>
       uploadImageToFirebaseStorage(storageImageName, BlobFile),
 
@@ -31,8 +31,6 @@ const useUploadProfilePic = () => {
       }
     },
   });
-
-  return {...mutationData, uidExists: !!userId};
 };
 
 export default useUploadProfilePic;
