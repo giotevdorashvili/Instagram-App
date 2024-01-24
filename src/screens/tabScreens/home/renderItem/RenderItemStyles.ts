@@ -45,4 +45,16 @@ export default StyleSheet.create({
   iconButton: {
     margin: 0,
   },
+  heartIconContainer: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    position: 'absolute',
+  },
+  heartIcon: {
+    width: 200,
+    height: 200,
+  },
 });

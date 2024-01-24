@@ -1,26 +1,27 @@
+import {useEffect} from 'react';
 import {View, Pressable, Image} from 'react-native';
-import {IconButton, TextInput, Text, Icon} from 'react-native-paper';
+import {IconButton, TextInput, Text} from 'react-native-paper';
 import {TapGestureHandler} from 'react-native-gesture-handler';
-import Animated from 'react-native-reanimated';
 
 import styles from './RenderItemStyles';
 import useFetchUser from '../../../../hooks/services/useFetchUser';
 import useAppTheme from '../../../../hooks/theme/useApptheme';
 import {calculatePostAge} from '../../../../utils/home/utils';
 import {useTabNavigation} from '../../../../navigators/tabNavigator/TabNavigator';
-import useAnimatePostLikes from '../../../../hooks/posts/useAnimatePostLikes';
 import {FIREBASE_AUTH} from '../../../../services/FirebaseConfig';
 import {PostTypes} from '../../../../services/ServiceTypes';
+import LottieView from 'lottie-react-native';
+import useAnimateLikeIcons from '../../../../hooks/posts/useAnimateLikeIcons';
 
 const RenderItem = ({item}: {item: PostTypes}) => {
   const {
     isPending,
     optimisticallyLiked,
-    likeIconStyle,
-    likeImageHeartStyle,
-    handleLikePostFromIcon,
+    iconAnimationRef,
+    heartAnimationRef,
     handleLikePostFromImage,
-  } = useAnimatePostLikes();
+    handleLikePostFromIcon,
+  } = useAnimateLikeIcons();
 
   const {data} = useFetchUser();
 
@@ -37,11 +38,16 @@ const RenderItem = ({item}: {item: PostTypes}) => {
 
   const {
     paperTheme: {
-      colors: {main, likedPostColor},
+      colors: {main},
     },
   } = useAppTheme();
 
   const postAge = calculatePostAge(item.timeStamp);
+
+  useEffect(() => {
+    if (isPostLiked) iconAnimationRef.current?.play(30, 30);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleProfilePicPress = () => {
     navigation.navigate('Profile');
@@ -69,22 +75,27 @@ const RenderItem = ({item}: {item: PostTypes}) => {
         }>
         <View>
           <Image style={styles.postImage} source={{uri: item.postImageUri}} />
-          <Animated.View style={likeImageHeartStyle}>
-            <Icon source="cards-heart" size={100} color="white" />
-          </Animated.View>
+
+          <View style={styles.heartIconContainer}>
+            <LottieView
+              ref={heartAnimationRef}
+              source={require('../../../../assets/heart-animation.json')}
+              style={styles.heartIcon}
+              loop={false}
+            />
+          </View>
         </View>
       </TapGestureHandler>
 
       <View style={styles.iconsContainer}>
-        <Animated.View style={likeIconStyle}>
-          <IconButton
-            size={30}
-            style={styles.iconButton}
-            icon={isPostLiked ? 'cards-heart' : 'cards-heart-outline'}
-            iconColor={isPostLiked ? likedPostColor : undefined}
-            onPress={() => handleLikePostFromIcon(item, isPostLiked)}
+        <Pressable onPress={() => handleLikePostFromIcon(item, isPostLiked)}>
+          <LottieView
+            ref={iconAnimationRef}
+            source={require('../../../../assets/like-animation.json')}
+            style={{width: 45, height: 45}}
+            loop={false}
           />
-        </Animated.View>
+        </Pressable>
         <IconButton
           icon="chat-outline"
           size={30}
