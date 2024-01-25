@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import {View, Pressable, Image} from 'react-native';
 import {IconButton, TextInput, Text} from 'react-native-paper';
 import {TapGestureHandler} from 'react-native-gesture-handler';
@@ -11,17 +11,20 @@ import {useTabNavigation} from '../../../../navigators/tabNavigator/TabNavigator
 import {FIREBASE_AUTH} from '../../../../services/FirebaseConfig';
 import {PostTypes} from '../../../../services/ServiceTypes';
 import LottieView from 'lottie-react-native';
-import useAnimateLikeIcons from '../../../../hooks/posts/useAnimateLikeIcons';
+import useHandlePostLikes from '../../../../hooks/posts/useHandlePostLikes';
 
 const RenderItem = ({item}: {item: PostTypes}) => {
   const {
     isPending,
     optimisticallyLiked,
-    iconAnimationRef,
-    heartAnimationRef,
     handleLikePostFromImage,
     handleLikePostFromIcon,
-  } = useAnimateLikeIcons();
+  } = useHandlePostLikes();
+
+  const iconAnimationRef = useRef<LottieView>(null);
+  const heartAnimationRef = useRef<LottieView>(null);
+
+  const didMount = useRef(true);
 
   const {data} = useFetchUser();
 
@@ -45,9 +48,23 @@ const RenderItem = ({item}: {item: PostTypes}) => {
   const postAge = calculatePostAge(item.timeStamp);
 
   useEffect(() => {
-    if (isPostLiked) iconAnimationRef.current?.play(30, 30);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (didMount.current) {
+      if (isPostLiked) iconAnimationRef.current?.play(30, 30);
+      else iconAnimationRef.current?.play(0, 0);
+      didMount.current = false;
+    } else if (isPostLiked) {
+      iconAnimationRef.current?.play(0, 45);
+    } else {
+      iconAnimationRef.current?.play(45);
+    }
+  }, [iconAnimationRef, isPostLiked]);
+
+  const onPostImagePress = () => {
+    heartAnimationRef.current?.play();
+    iconAnimationRef.current?.play(15, 45);
+
+    handleLikePostFromImage(item.timeStamp, isPostLiked);
+  };
 
   const handleProfilePicPress = () => {
     navigation.navigate('Profile');
@@ -68,11 +85,7 @@ const RenderItem = ({item}: {item: PostTypes}) => {
         <Text style={styles.username}>{username}</Text>
       </View>
 
-      <TapGestureHandler
-        numberOfTaps={2}
-        onActivated={() =>
-          handleLikePostFromImage(item.timeStamp, isPostLiked)
-        }>
+      <TapGestureHandler numberOfTaps={2} onActivated={onPostImagePress}>
         <View>
           <Image style={styles.postImage} source={{uri: item.postImageUri}} />
 
