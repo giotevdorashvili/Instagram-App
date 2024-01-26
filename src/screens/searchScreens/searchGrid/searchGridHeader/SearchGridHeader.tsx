@@ -3,7 +3,7 @@ import {Searchbar} from 'react-native-paper';
 import {SafeAreaView} from 'react-native-safe-area-context';
 
 import useAppTheme from '../../../../hooks/theme/useApptheme';
-import {useTabStackNavigation} from '../../../../navigators/searchStack/SearchStack';
+import {useTabStackNavigation} from '../../../../navigators/searchStackNavigator/SearchStackNavigator';
 
 const SearchGridHeader = () => {
   const navigation = useTabStackNavigation();

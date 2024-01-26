@@ -6,7 +6,7 @@ import StatusBar from '../../../components/statusBar/StatusBar';
 import InstagramLogo from '../../../components/logos/InstagramLogo';
 import MetaLogo from '../../../components/logos/MetaLogo';
 import SignUpInputs from './inputs/SignUpInputs';
-import {RootScreenProps} from '../../../navigators/rootStack/RootStackTypes';
+import {RootScreenProps} from '../../../navigators/rootStackNavigator/RootStackTypes';
 import useAppTheme from '../../../hooks/theme/useApptheme';
 
 const SignUp: React.FC<RootScreenProps<'SignUp'>> = () => {

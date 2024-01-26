@@ -1,6 +1,6 @@
 import {useMutation, useQueryClient} from '@tanstack/react-query';
 import {createPost} from '../../services/crudPosts';
-import {useRootNavigation} from '../../navigators/rootStack/RootStack';
+import {useRootNavigation} from '../../navigators/rootStackNavigator/RootStackNavigator';
 import {FIREBASE_AUTH} from '../../services/FirebaseConfig';
 
 const useCreatePost = () => {
@@ -13,7 +13,7 @@ const useCreatePost = () => {
   return useMutation({
     mutationFn: createPost,
     onSuccess: async () => {
-      navigation.navigate('TabStack', {screen: 'Home'});
+      navigation.navigate('TabNavigator', {screen: 'Home'});
 
       queryClient.invalidateQueries({queryKey: ['posts', userId]});
     },

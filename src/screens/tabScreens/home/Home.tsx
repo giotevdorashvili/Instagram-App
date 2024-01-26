@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {ActivityIndicator, Text} from 'react-native-paper';
+import {ActivityIndicator} from 'react-native-paper';
 import Animated, {
   clamp,
   withSpring,
@@ -11,7 +11,7 @@ import Animated, {
   useAnimatedScrollHandler,
 } from 'react-native-reanimated';
 
-import {TabScreenProps} from '../../../navigators/tabStack/TabStackTypes';
+import {TabScreenProps} from '../../../navigators/tabNavigator/TabNavigatorTypes';
 import useAppTheme from '../../../hooks/theme/useApptheme';
 import useFetchUserPosts from '../../../hooks/services/useFetchUserPosts';
 import NoPostsTitle from './noPostsTitle/NoPostsTitle';
@@ -23,7 +23,6 @@ import StatusBar from '../../../components/statusBar/StatusBar';
 const Home: React.FC<TabScreenProps<'Home'>> = () => {
   const {
     data,
-    error,
     isLoading,
     isFetching,
     hasNextPage,
@@ -77,9 +76,6 @@ const Home: React.FC<TabScreenProps<'Home'>> = () => {
   }));
 
   if (isLoading) return <ActivityIndicator style={styles.container} />;
-
-  if (error)
-    return <Text style={{flex: 1, marginTop: 50}}>{error.message}</Text>;
 
   return (
     <SafeAreaView style={[styles.container, {backgroundColor}]}>

@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {TabParamList} from '../tabStack/TabStackTypes';
+import {TabParamList} from '../tabNavigator/TabNavigatorTypes';
 
 export type RootScreenProps<T extends keyof RootStackParamList> =
   NativeStackScreenProps<RootStackParamList, T>;
@@ -7,6 +7,6 @@ export type RootScreenProps<T extends keyof RootStackParamList> =
 export type RootStackParamList = {
   LogIn: undefined;
   SignUp: undefined;
-  TabStack: {screen: keyof TabParamList};
+  TabNavigator: {screen: keyof TabParamList};
   NewPost: {imageUri: string | undefined};
 };

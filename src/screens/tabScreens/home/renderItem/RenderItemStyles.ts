@@ -16,7 +16,6 @@ export default StyleSheet.create({
     borderRadius: 100,
   },
   username: {
-    // fontSize: 15,
     fontWeight: '500',
   },
   postImage: {
@@ -32,7 +31,6 @@ export default StyleSheet.create({
   },
   inputContent: {
     marginLeft: -15,
-    // fontWeight: '500',
   },
   commentAvatar: {
     height: 35,
@@ -43,9 +41,20 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 5,
-    // marginHorizontal: 10,
   },
   iconButton: {
     margin: 0,
+  },
+  heartIconContainer: {
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    display: 'flex',
+    position: 'absolute',
+  },
+  heartIcon: {
+    width: 200,
+    height: 200,
   },
 });

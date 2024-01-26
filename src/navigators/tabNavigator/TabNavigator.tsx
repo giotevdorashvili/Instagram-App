@@ -4,11 +4,11 @@ import {useNavigation} from '@react-navigation/native';
 
 import Home from '../../screens/tabScreens/home/Home';
 import Profile from '../../screens/tabScreens/profile/Profile';
-import {RootScreenProps} from '../rootStack/RootStackTypes';
-import {TabParamList} from './TabStackTypes';
+import {RootScreenProps} from '../rootStackNavigator/RootStackTypes';
+import {TabParamList} from './TabNavigatorTypes';
 import useAppTheme from '../../hooks/theme/useApptheme';
 import {renderHeaderRight, renderTabIcon} from '../../utils/tabNavigator/utils';
-import SearchStack from '../searchStack/SearchStack';
+import SearchStackNavigator from '../searchStackNavigator/SearchStackNavigator';
 
 export const useTabNavigation = () => {
   return useNavigation<NativeStackNavigationProp<TabParamList>>();
@@ -16,7 +16,7 @@ export const useTabNavigation = () => {
 
 const Tab = createBottomTabNavigator<TabParamList>();
 
-const TabNavigator: React.FC<RootScreenProps<'TabStack'>> = () => {
+const TabNavigator: React.FC<RootScreenProps<'TabNavigator'>> = () => {
   const {paperTheme} = useAppTheme();
 
   return (
@@ -41,8 +41,8 @@ const TabNavigator: React.FC<RootScreenProps<'TabStack'>> = () => {
         }}
       />
       <Tab.Screen
-        name="SearchStack"
-        component={SearchStack}
+        name="SearchStackNavigator"
+        component={SearchStackNavigator}
         options={{
           headerShown: false,
           tabBarIcon: ({color}) => renderTabIcon('magnify', color),
